@@ -41,3 +41,4 @@ x64/
 Release/
 installer
 Debug/
+.vs
