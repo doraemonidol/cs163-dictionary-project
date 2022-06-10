@@ -76,31 +76,39 @@ void RemoveAll(TrieNode* root) {
 }
 
 void ChooseDataSet(TrieNode*& root, int choose) {
+    fstream f;
+    f.open("FanstaticFour.txt");
     switch choose: {
         case 1: {
             InitializeTrie(root, "slang.txt");
+            f << "slang.txt";
             break;
         }
         case 2: {
             InitializeTrie(root, "emotional.txt");
+            f << "emotional.txt";
             break;
         }
         case 3: {
             InitializeTrie(root, "EngToEng.txt");
+            f << "EngToEng.txt";
             break;
         }
         case 4: {
             InitializeTrie(root, "EngToViet.txt");
+            f << "EngToViet.txt";
             break;
         }
         case 5: {
             InitializeTrie(root, "VietToEng.txt");
+            f << "VietToEng.txt";
             break;
         }
     }
+    f.close();
 }
 
-void TrieOption() {
+void TrieOption() { 
     fstream f;
     f.open("Trie.txt");
     TrieNode* root;
@@ -117,3 +125,4 @@ void TrieOption() {
         }
     }
 }
+
