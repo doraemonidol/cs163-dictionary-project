@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <string>
 #include <winuser.h>
+#include "function.h"
 using namespace std;
 using namespace System;
 using namespace System::Windows::Forms;
