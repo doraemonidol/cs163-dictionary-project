@@ -28,3 +28,9 @@ string convertToString(System::String ^ st)
 {
     return msclr::interop::marshal_as<std::string>(st);
 }
+struct TrieNode {
+	TrieNode* children[128]; //26
+	bool isEndOfWord;
+	int childcount = 0;
+	string content = "";
+};
