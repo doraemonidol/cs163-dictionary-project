@@ -11,7 +11,7 @@ struct Node {
     string content = "";
 };
 
-bool isLeafNode(struct TrieNode* root)
+bool isLeafNode(TrieNode* root)
 {
     return root->isEndOfWord != false;
 }

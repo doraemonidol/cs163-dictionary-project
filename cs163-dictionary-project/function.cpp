@@ -1,6 +1,6 @@
-#include "main.h"
-using namespace std;
-TrieNode* getNode(void) {
+#include "function.h"
+
+TrieNode* getNode() {
 	TrieNode* pNode = new TrieNode;
 	pNode->isEndOfWord = false;
 	for (int i = 0; i < 128; i++)
@@ -68,4 +68,30 @@ bool remove(TrieNode* root, string& key, int depth = 0) {
 		return true;
 	}
 	return false;
+}
+
+
+bool AddKey(TrieNode* keywordTrie, TrieNode* definitionTrie, string& keyword, string& definition)
+{
+    if (insert(keywordTrie, keyword, definition)) {
+        insert(definitionTrie, definition, keyword);
+        return true;
+    }
+    return false;
+}
+
+bool RemoveKey(TrieNode* keywordTrie, TrieNode* definitionTrie, string& keyword)
+{
+    TrieNode* key = search(keywordTrie, keyword);
+    if (!key)
+        return false;
+    string definition = key->content;
+    remove(keywordTrie, keyword, 0);
+    remove(definitionTrie, definition, 0);
+    return true;
+}
+
+bool isLeafNode(TrieNode* root)
+{
+    return root->isEndOfWord != false;
 }

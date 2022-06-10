@@ -41,3 +41,8 @@ struct HistoryNode {
 	string word = "";
 	HistoryNode* next = nullptr;
 };
+
+struct Node {
+    string word = "";
+    string content = "";
+};
