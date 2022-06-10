@@ -1,4 +1,5 @@
 #include "mainFunction.h"
+#include "main.h"
 using namespace System;
 using namespace System::Windows::Forms;
 

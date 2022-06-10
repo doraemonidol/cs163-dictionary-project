@@ -1,6 +1,4 @@
 #pragma once
-#include "main.h"
-#include "function.h"
 
 void editDefinition(TrieNode* def, TrieNode* key, TrieNode* node, string newDef);
 bool AddFavourite(TrieNode* favouriteTrie, string& keyword);

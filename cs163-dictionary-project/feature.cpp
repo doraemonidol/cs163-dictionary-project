@@ -1,4 +1,6 @@
+#include "main.h"
 #include "feature.h"
+#include "function.h"
 
 void editDefinition(TrieNode* def, TrieNode* key, TrieNode* node, string newDef)
 {

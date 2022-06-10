@@ -1,3 +1,5 @@
+#include "main.h"
+#include "feature.h"
 #include "function.h"
 
 TrieNode* getNode() {
@@ -42,7 +44,7 @@ bool isEmpty(TrieNode* root)
 	return root->childcount == 0;
 }
 
-bool remove(TrieNode* root, string& key, int depth = 0) {
+bool remove(TrieNode* root, string& key, int depth) {
 	if (!root)
 		return NULL;
 	if (depth == key.size()) {
@@ -94,4 +96,101 @@ bool RemoveKey(TrieNode* keywordTrie, TrieNode* definitionTrie, string& keyword)
 bool isLeafNode(TrieNode* root)
 {
     return root->isEndOfWord != false;
+}
+
+void InitializeTrie(TrieNode*& root, string path)
+{
+    fstream f;
+    f.open(path);
+    bool checkEndofWord;
+    string str, Word, Content;
+    char check;
+    if (path == "slang.txt")
+        check = 96; // ` 
+    else check = 9; // TAB 
+    while (!f.eof())
+    {
+        str = "";
+        Word = "";
+        Content = "";
+        checkEndofWord = false;
+        getline(f, str);
+        for (int i = 0; i < str.length(); i++) {
+            if (str[i] == check) {
+                checkEndofWord = true;
+                Word += '\0';
+            }
+            if (!checkEndofWord)
+                Word += str[i];
+            else
+                Content += str[i];
+        }
+        insert(root, Word, Content);
+    }
+    f.close();
+}
+
+void RemoveAll(TrieNode* root)
+{
+    if (!root)
+        return;
+    for (int i = 0; i < 128; i++)
+        if (root->children[i])
+            RemoveAll(root->children[i]);
+    delete root;
+    root = nullptr;
+}
+
+void ChooseDataSet(TrieNode*& root, int choose)
+{
+    fstream f;
+    f.open("FanstaticFour.txt");
+    switch
+    (choose) {
+    case 1: {
+        InitializeTrie(root, "slang.txt");
+        f << "slang.txt";
+        break;
+    }
+    case 2: {
+        InitializeTrie(root, "emotional.txt");
+        f << "emotional.txt";
+        break;
+    }
+    case 3: {
+        InitializeTrie(root, "EngToEng.txt");
+        f << "EngToEng.txt";
+        break;
+    }
+    case 4: {
+        InitializeTrie(root, "EngToViet.txt");
+        f << "EngToViet.txt";
+        break;
+    }
+    case 5: {
+        InitializeTrie(root, "VietToEng.txt");
+        f << "VietToEng.txt";
+        break;
+    }
+    }
+        f.close();
+}
+
+void TrieOption()
+{
+    fstream f;
+    f.open("Trie.txt");
+    int choose;
+    TrieNode* root;
+    if (f.is_open()) {
+        f.close();
+        ChooseDataSet(root, choose);
+    } else {
+        f.close();
+        InitializeTrie(root, "Trie.txt");
+        if (choose != 0) { //switch data set
+            RemoveAll(root);
+            ChooseDataSet(root, choose);
+        }
+    }
 }

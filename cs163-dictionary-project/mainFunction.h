@@ -1,7 +1,7 @@
 #pragma once
-#include "Long.cpp"
-#include "mainFunction.cpp"
 #include "main.h"
+#include "feature.h"
+#include "function.h"
 namespace cs163dictionaryproject {
 
 	using namespace System;
@@ -21,7 +21,7 @@ namespace cs163dictionaryproject {
             public:
                 TrieNode *def, *key, *fav;
                 HistoryNode* his;
-                int wordNum, gameAns;
+                int wordNum;
 
             private:
                 System::Windows::Forms::Panel ^ panAddNewkey;
@@ -223,7 +223,7 @@ namespace cs163dictionaryproject {
                     //
                     // btnSearch
                     //
-                    this->btnSearch->Location = System::Drawing::Point(245, 63);
+                    this->btnSearch->Location = System::Drawing::Point(245, 56);
                     this->btnSearch->Name = L"btnSearch";
                     this->btnSearch->Size = System::Drawing::Size(70, 31);
                     this->btnSearch->TabIndex = 0;
@@ -461,6 +461,16 @@ namespace cs163dictionaryproject {
                     this->PerformLayout();
                 }
 #pragma endregion
+
+    private: System::String ^ convertString(string st) {
+        return gcnew System::String(st.c_str());
+    }
+
+    private : string convertToString(System::String ^ st)
+    {
+        return msclr::interop::marshal_as<std::string>(st);
+    }
+
 	private: System::Void btnAddFavor_Click(System::Object^ sender, System::EventArgs^ e) {
 		AddFavourite(fav, convertToString(searchBox->Text));
 	}

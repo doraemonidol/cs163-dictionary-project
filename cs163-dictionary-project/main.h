@@ -16,20 +16,11 @@
 #include <string>
 #include <winuser.h>
 #include <vector>
-#include "function.h"
 using namespace std;
 using namespace System;
 using namespace System::Windows::Forms;
 #pragma warning(disable : 4996)
 
-System::String ^ convertString(string st) {
-    return gcnew System::String(st.c_str());
-} 
-
-string convertToString(System::String ^ st)
-{
-    return msclr::interop::marshal_as<std::string>(st);
-}
 struct TrieNode {
 	TrieNode* children[128]; //26
 	bool isEndOfWord;
