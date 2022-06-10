@@ -34,3 +34,4 @@ struct TrieNode {
 	int childcount = 0;
 	string content = "";
 };
+
