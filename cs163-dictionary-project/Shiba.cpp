@@ -62,7 +62,7 @@ vector <string> gameGuessKey(TrieNode* root, int n, int mode, int &ans) {
 
 		swap(res[1], res[ans]);
 	}
-	else if (mode == 2) { // given: def, guess: key
+	else if (mode == 0) { // given: def, guess: key
 		res.push_back(def1);
 		res.push_back(key1);
 		res.push_back(key2); 

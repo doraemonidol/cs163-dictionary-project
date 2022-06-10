@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <string>
 #include <winuser.h>
+#include <vector>
 #include "function.h"
 using namespace std;
 using namespace System;
