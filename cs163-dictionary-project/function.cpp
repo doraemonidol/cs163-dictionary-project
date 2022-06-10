@@ -10,7 +10,9 @@ TrieNode* getNode() {
 	return pNode;
 }
 
-bool insert(TrieNode* root, string key, string content) {
+bool insert(TrieNode*& root, string key, string content) {
+    if (!root)
+        root = getNode();
 	TrieNode* pCur = root;
 	for (int i = 0; i < key.length(); i++) {
 		int index = key[i];
@@ -72,7 +74,6 @@ bool remove(TrieNode* root, string& key, int depth) {
 	return false;
 }
 
-
 bool AddKey(TrieNode* keywordTrie, TrieNode* definitionTrie, string& keyword, string& definition)
 {
     if (insert(keywordTrie, keyword, definition)) {
@@ -98,10 +99,9 @@ bool isLeafNode(TrieNode* root)
     return root->isEndOfWord != false;
 }
 
-void InitializeTrie(TrieNode*& root, string path)
+void InitializeTrie(TrieNode*& key, TrieNode *& def, string path)
 {
-    fstream f;
-    f.open(path);
+    ifstream f(path);
     bool checkEndofWord;
     string str, Word, Content;
     char check;
@@ -125,12 +125,13 @@ void InitializeTrie(TrieNode*& root, string path)
             else
                 Content += str[i];
         }
-        insert(root, Word, Content);
+        insert(key, Word, Content);
+        insert(def, Content, Word);
     }
     f.close();
 }
 
-void RemoveAll(TrieNode* root)
+void RemoveAll(TrieNode*& root)
 {
     if (!root)
         return;
@@ -141,56 +142,53 @@ void RemoveAll(TrieNode* root)
     root = nullptr;
 }
 
-void ChooseDataSet(TrieNode*& root, int choose)
+FullDictTree ChooseDataSet(TrieNode* key, TrieNode* def, string datasetName)
 {
-    fstream f;
-    f.open("FanstaticFour.txt");
-    switch
-    (choose) {
-    case 1: {
-        InitializeTrie(root, "slang.txt");
-        f << "slang.txt";
-        break;
-    }
-    case 2: {
-        InitializeTrie(root, "emotional.txt");
-        f << "emotional.txt";
-        break;
-    }
-    case 3: {
-        InitializeTrie(root, "EngToEng.txt");
-        f << "EngToEng.txt";
-        break;
-    }
-    case 4: {
-        InitializeTrie(root, "EngToViet.txt");
-        f << "EngToViet.txt";
-        break;
-    }
-    case 5: {
-        InitializeTrie(root, "VietToEng.txt");
-        f << "VietToEng.txt";
-        break;
-    }
-    }
-        f.close();
+    ofstream f("fanstatic4.txt");
+    RemoveAll(key);
+    RemoveAll(def);
+    InitializeTrie(key, def, datasetName);
+    // WRITE TRIE TO FILE here <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    FullDictTree dict;
+    dict.key = key;
+    dict.def = def;
+    f << datasetName << endl;
+    f.close();
+    return dict;
 }
 
-void TrieOption()
+bool TrieOption()
 {
     fstream f;
-    f.open("Trie.txt");
-    int choose;
-    TrieNode* root;
+    f.open("trie.txt");
     if (f.is_open()) {
+        // READ IN BUILT-TRIE HERE
         f.close();
-        ChooseDataSet(root, choose);
     } else {
+        return false;
+    }
+    /*
         f.close();
-        InitializeTrie(root, "Trie.txt");
+        InitializeTrie(root, "trie.txt");
         if (choose != 0) { //switch data set
             RemoveAll(root);
             ChooseDataSet(root, choose);
         }
+        */
+        return true;
+}
+
+void inputData(string& curDatset) {
+    ifstream f("fantastic4.txt");
+    if (f.is_open()) {
+        getline(f, curDatset);
+        // INPUT TRIE FROM FILE here <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        f.close();
+    } else {
+        f.close();
+        ofstream o("fantastic4.txt");
+        o << datasetName[0] << endl;
+        o.close();
+        curDatset = datasetName[0];
     }
 }

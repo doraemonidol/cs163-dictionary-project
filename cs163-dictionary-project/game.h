@@ -2,7 +2,6 @@
 #include "main.h"
 #include "function.h"
 #include "feature.h"
-#include "mainFunction.h"
 namespace cs163dictionaryproject {
 
 using namespace System;
@@ -20,27 +19,25 @@ using namespace System::Collections::Generic;
 public
 ref class game : public System::Windows::Forms::Form {
     private:
-        TrieNode *def, *key, *fav;
-        HistoryNode* his;
-        int wordNum;
+        TrieNode *key0;
+        int wordNum1;
         String ^ gameAns;
 
     public:
-    game(void)
-    {
-        InitializeComponent();
-        //
-        //TODO: Add the constructor code here
-        //
-    }
-    void getData(TrieNode* inDef, TrieNode* inKey, TrieNode* inFav, HistoryNode* inHist, int wordCount)
-    {
-        def = inDef;
-        key = inKey;
-        fav = inFav;
-        his = inHist;
-        wordNum = wordCount;
-    }
+        game(void)
+        {
+            InitializeComponent();
+            //
+            //TODO: Add the constructor code here
+            //
+        }
+
+        game(TrieNode* inKey, int wordCount)
+        {
+            InitializeComponent();
+            key0 = inKey;
+            wordNum1 = wordCount;
+        }
 
 protected:
     /// <summary>
@@ -108,9 +105,9 @@ private:
         // otp1
         //
         this->otp1->BackColor = System::Drawing::SystemColors::Control;
-        this->otp1->Location = System::Drawing::Point(127, 178);
+        this->otp1->Location = System::Drawing::Point(113, 158);
         this->otp1->Name = L"otp1";
-        this->otp1->Size = System::Drawing::Size(218, 44);
+        this->otp1->Size = System::Drawing::Size(194, 39);
         this->otp1->TabIndex = 0;
         this->otp1->Text = L"button1";
         this->otp1->UseVisualStyleBackColor = false;
@@ -118,9 +115,9 @@ private:
         //
         // otp2
         //
-        this->otp2->Location = System::Drawing::Point(127, 228);
+        this->otp2->Location = System::Drawing::Point(113, 203);
         this->otp2->Name = L"otp2";
-        this->otp2->Size = System::Drawing::Size(218, 50);
+        this->otp2->Size = System::Drawing::Size(194, 44);
         this->otp2->TabIndex = 1;
         this->otp2->Text = L"button2";
         this->otp2->UseVisualStyleBackColor = true;
@@ -128,18 +125,18 @@ private:
         //
         // otp3
         //
-        this->otp3->Location = System::Drawing::Point(127, 285);
+        this->otp3->Location = System::Drawing::Point(113, 253);
         this->otp3->Name = L"otp3";
-        this->otp3->Size = System::Drawing::Size(218, 50);
+        this->otp3->Size = System::Drawing::Size(194, 44);
         this->otp3->TabIndex = 2;
         this->otp3->Text = L"button3";
         this->otp3->UseVisualStyleBackColor = true;
         //
         // otp4
         //
-        this->otp4->Location = System::Drawing::Point(127, 341);
+        this->otp4->Location = System::Drawing::Point(113, 303);
         this->otp4->Name = L"otp4";
-        this->otp4->Size = System::Drawing::Size(218, 63);
+        this->otp4->Size = System::Drawing::Size(194, 56);
         this->otp4->TabIndex = 3;
         this->otp4->Text = L"button4";
         this->otp4->UseVisualStyleBackColor = true;
@@ -147,17 +144,17 @@ private:
         // quesLabel
         //
         this->quesLabel->AutoSize = true;
-        this->quesLabel->Location = System::Drawing::Point(210, 99);
+        this->quesLabel->Location = System::Drawing::Point(187, 88);
         this->quesLabel->Name = L"quesLabel";
-        this->quesLabel->Size = System::Drawing::Size(50, 18);
+        this->quesLabel->Size = System::Drawing::Size(46, 17);
         this->quesLabel->TabIndex = 8;
         this->quesLabel->Text = L"label5";
         //
         // switchGameMode
         //
-        this->switchGameMode->Location = System::Drawing::Point(127, 539);
+        this->switchGameMode->Location = System::Drawing::Point(113, 479);
         this->switchGameMode->Name = L"switchGameMode";
-        this->switchGameMode->Size = System::Drawing::Size(179, 59);
+        this->switchGameMode->Size = System::Drawing::Size(159, 52);
         this->switchGameMode->TabIndex = 9;
         this->switchGameMode->Text = L"Swich Game Mode";
         this->switchGameMode->UseVisualStyleBackColor = true;
@@ -165,9 +162,9 @@ private:
         //
         // nextQuestion
         //
-        this->nextQuestion->Location = System::Drawing::Point(388, 458);
+        this->nextQuestion->Location = System::Drawing::Point(345, 407);
         this->nextQuestion->Name = L"nextQuestion";
-        this->nextQuestion->Size = System::Drawing::Size(128, 46);
+        this->nextQuestion->Size = System::Drawing::Size(114, 41);
         this->nextQuestion->TabIndex = 10;
         this->nextQuestion->Text = L"Next Question";
         this->nextQuestion->UseVisualStyleBackColor = true;
@@ -175,27 +172,28 @@ private:
         //
         // backToMenu
         //
-        this->backToMenu->Location = System::Drawing::Point(12, 12);
+        this->backToMenu->Location = System::Drawing::Point(11, 11);
         this->backToMenu->Name = L"backToMenu";
-        this->backToMenu->Size = System::Drawing::Size(126, 38);
+        this->backToMenu->Size = System::Drawing::Size(112, 34);
         this->backToMenu->TabIndex = 11;
         this->backToMenu->Text = L"Back to Menu";
         this->backToMenu->UseVisualStyleBackColor = true;
+        this->backToMenu->Click += gcnew System::EventHandler(this, &game::backToMenu_Click);
         //
         // nameGameMode
         //
         this->nameGameMode->AutoSize = true;
-        this->nameGameMode->Location = System::Drawing::Point(395, 22);
+        this->nameGameMode->Location = System::Drawing::Point(351, 20);
         this->nameGameMode->Name = L"nameGameMode";
-        this->nameGameMode->Size = System::Drawing::Size(148, 18);
+        this->nameGameMode->Size = System::Drawing::Size(136, 17);
         this->nameGameMode->TabIndex = 12;
         this->nameGameMode->Text = L"Guess the Definition";
         //
         // game
         //
-        this->AutoScaleDimensions = System::Drawing::SizeF(9, 18);
+        this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
         this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-        this->ClientSize = System::Drawing::Size(587, 624);
+        this->ClientSize = System::Drawing::Size(522, 555);
         this->Controls->Add(this->nameGameMode);
         this->Controls->Add(this->backToMenu);
         this->Controls->Add(this->nextQuestion);
@@ -265,24 +263,24 @@ private:
 
         int mode = (nameGameMode->Text == convertString("Guess the Definition"));
 
-        int x1 = randomNum(wordNum);
+        int x1 = randomNum(wordNum1);
         int x2, x3, x4;
         do {
-            x2 = randomNum(wordNum);
+            x2 = randomNum(wordNum1);
         } while (x1 == x2);
 
         do {
-            x3 = randomNum(wordNum);
+            x3 = randomNum(wordNum1);
         } while (x1 == x3 || x2 == x3);
 
         do {
-            x4 = randomNum(wordNum);
+            x4 = randomNum(wordNum1);
         } while (x1 == x4 || x2 == x4 || x3 == x4);
 
-        randomWord(key, key1, def1, x1);
-        randomWord(key, key2, def2, x2);
-        randomWord(key, key3, def3, x3);
-        randomWord(key, key4, def4, x4);
+        randomWord(key0, key1, def1, x1);
+        randomWord(key0, key2, def2, x2);
+        randomWord(key0, key3, def3, x3);
+        randomWord(key0, key4, def4, x4);
 
         vector<string> res;
         if (mode == 1) { // given: key, guess : def
@@ -315,6 +313,12 @@ private:
     {
                 nameGameMode->Text = convertString("Guess the Definition" ? "Guess the Key" : "Guess the Definition");
                 nextQuestion->PerformClick();
+    }
+
+private:
+    System::Void backToMenu_Click(System::Object ^ sender, System::EventArgs ^ e)
+    {
+        Close();
     }
 };
 }

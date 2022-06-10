@@ -21,6 +21,8 @@ using namespace System;
 using namespace System::Windows::Forms;
 #pragma warning(disable : 4996)
 
+const vector<string> datasetName = { "slang.txt", "emotional.txt", "EngToEng.txt", "EngToViet.txt", "VietToEng.txt" };
+
 struct TrieNode {
 	TrieNode* children[128]; //26
 	bool isEndOfWord;
@@ -36,4 +38,9 @@ struct HistoryNode {
 struct Node {
     string word = "";
     string content = "";
+};
+
+struct FullDictTree {
+    TrieNode* key;
+    TrieNode* def;
 };

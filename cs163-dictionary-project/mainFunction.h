@@ -2,6 +2,7 @@
 #include "main.h"
 #include "feature.h"
 #include "function.h"
+#include "game.h"
 namespace cs163dictionaryproject {
 
 	using namespace System;
@@ -22,6 +23,7 @@ namespace cs163dictionaryproject {
                 TrieNode *def, *key, *fav;
                 HistoryNode* his;
                 int wordNum;
+                String ^ curDataset;
 
             private:
                 System::Windows::Forms::Panel ^ panAddNewkey;
@@ -66,6 +68,21 @@ namespace cs163dictionaryproject {
                 System::Windows::Forms::TextBox ^ newDef;
 
             private:
+                System::Windows::Forms::Panel ^ panSwDataset;
+
+            private:
+                System::Windows::Forms::Button ^ btnConfSwData;
+
+            private:
+                System::Windows::Forms::ComboBox ^ dataSetOpt;
+
+            private:
+                System::Windows::Forms::Button ^ btnResetDatset;
+
+            private:
+                System::Windows::Forms::Button ^ btnGameOn;
+
+            private:
 
 
             private:
@@ -92,6 +109,13 @@ namespace cs163dictionaryproject {
             his = inHist;
             wordNum = wordCount;
 		}
+        void getDataSet(string cur) {
+            dataSetOpt->Items->Clear();
+            for (string c : datasetName) {
+                dataSetOpt->Items->Add(gcnew String(convertString(c)));
+            }
+            curDataset = convertString(cur);
+        }
 
 	protected:
 		/// <summary>
@@ -145,7 +169,10 @@ namespace cs163dictionaryproject {
                 System::Windows::Forms::Label ^ defLabel;
 
             private:
-                System::Windows::Forms::Label ^ kwLabel;
+                System::Windows::Forms::Label ^ keyLabel;
+
+            private:
+
 
             private:
 
@@ -163,10 +190,13 @@ namespace cs163dictionaryproject {
                 System::Windows::Forms::Button ^ btnSwData;
 
             private:
+                System::Windows::Forms::Label ^ searchMode;
+
+            private:
 
 
             private:
-                System::Windows::Forms::Label ^ label1;
+
 
             private:
                 System::Windows::Forms::Button ^ btnSwSearchMode;
@@ -200,9 +230,9 @@ namespace cs163dictionaryproject {
                     this->btnEdit = (gcnew System::Windows::Forms::Button());
                     this->btnAddFavor = (gcnew System::Windows::Forms::Button());
                     this->defLabel = (gcnew System::Windows::Forms::Label());
-                    this->kwLabel = (gcnew System::Windows::Forms::Label());
+                    this->keyLabel = (gcnew System::Windows::Forms::Label());
                     this->btnSwData = (gcnew System::Windows::Forms::Button());
-                    this->label1 = (gcnew System::Windows::Forms::Label());
+                    this->searchMode = (gcnew System::Windows::Forms::Label());
                     this->btnSwSearchMode = (gcnew System::Windows::Forms::Button());
                     this->btnViewFavor = (gcnew System::Windows::Forms::Button());
                     this->btnAddNewkey = (gcnew System::Windows::Forms::Button());
@@ -216,9 +246,15 @@ namespace cs163dictionaryproject {
                     this->btnConfirmEdit = (gcnew System::Windows::Forms::Button());
                     this->label4 = (gcnew System::Windows::Forms::Label());
                     this->newDef = (gcnew System::Windows::Forms::TextBox());
+                    this->panSwDataset = (gcnew System::Windows::Forms::Panel());
+                    this->btnConfSwData = (gcnew System::Windows::Forms::Button());
+                    this->dataSetOpt = (gcnew System::Windows::Forms::ComboBox());
+                    this->btnResetDatset = (gcnew System::Windows::Forms::Button());
+                    this->btnGameOn = (gcnew System::Windows::Forms::Button());
                     this->panShowDef->SuspendLayout();
                     this->panAddNewkey->SuspendLayout();
                     this->panEditDef->SuspendLayout();
+                    this->panSwDataset->SuspendLayout();
                     this->SuspendLayout();
                     //
                     // btnSearch
@@ -229,6 +265,7 @@ namespace cs163dictionaryproject {
                     this->btnSearch->TabIndex = 0;
                     this->btnSearch->Text = L"Search";
                     this->btnSearch->UseVisualStyleBackColor = true;
+                    this->btnSearch->Click += gcnew System::EventHandler(this, &mainFunction::btnSearch_Click);
                     //
                     // searchBox
                     //
@@ -243,11 +280,12 @@ namespace cs163dictionaryproject {
                     this->panShowDef->Controls->Add(this->btnEdit);
                     this->panShowDef->Controls->Add(this->btnAddFavor);
                     this->panShowDef->Controls->Add(this->defLabel);
-                    this->panShowDef->Controls->Add(this->kwLabel);
+                    this->panShowDef->Controls->Add(this->keyLabel);
                     this->panShowDef->Location = System::Drawing::Point(12, 101);
                     this->panShowDef->Name = L"panShowDef";
-                    this->panShowDef->Size = System::Drawing::Size(540, 471);
+                    this->panShowDef->Size = System::Drawing::Size(540, 423);
                     this->panShowDef->TabIndex = 2;
+                    this->panShowDef->Visible = false;
                     //
                     // btnRemove
                     //
@@ -257,6 +295,7 @@ namespace cs163dictionaryproject {
                     this->btnRemove->TabIndex = 4;
                     this->btnRemove->Text = L"Remove";
                     this->btnRemove->UseVisualStyleBackColor = true;
+                    this->btnRemove->Click += gcnew System::EventHandler(this, &mainFunction::btnRemove_Click);
                     //
                     // btnEdit
                     //
@@ -287,32 +326,33 @@ namespace cs163dictionaryproject {
                     this->defLabel->TabIndex = 1;
                     this->defLabel->Text = L"Definition";
                     //
-                    // kwLabel
+                    // keyLabel
                     //
-                    this->kwLabel->AutoSize = true;
-                    this->kwLabel->Location = System::Drawing::Point(35, 20);
-                    this->kwLabel->Name = L"kwLabel";
-                    this->kwLabel->Size = System::Drawing::Size(62, 17);
-                    this->kwLabel->TabIndex = 0;
-                    this->kwLabel->Text = L"Keyword";
+                    this->keyLabel->AutoSize = true;
+                    this->keyLabel->Location = System::Drawing::Point(35, 20);
+                    this->keyLabel->Name = L"keyLabel";
+                    this->keyLabel->Size = System::Drawing::Size(62, 17);
+                    this->keyLabel->TabIndex = 0;
+                    this->keyLabel->Text = L"Keyword";
                     //
                     // btnSwData
                     //
-                    this->btnSwData->Location = System::Drawing::Point(474, 29);
+                    this->btnSwData->Location = System::Drawing::Point(474, 41);
                     this->btnSwData->Name = L"btnSwData";
-                    this->btnSwData->Size = System::Drawing::Size(63, 56);
+                    this->btnSwData->Size = System::Drawing::Size(63, 44);
                     this->btnSwData->TabIndex = 3;
                     this->btnSwData->Text = L"Switch data";
                     this->btnSwData->UseVisualStyleBackColor = true;
+                    this->btnSwData->Click += gcnew System::EventHandler(this, &mainFunction::btnSwData_Click);
                     //
-                    // label1
+                    // searchMode
                     //
-                    this->label1->AutoSize = true;
-                    this->label1->Location = System::Drawing::Point(12, 29);
-                    this->label1->Name = L"label1";
-                    this->label1->Size = System::Drawing::Size(97, 17);
-                    this->label1->TabIndex = 5;
-                    this->label1->Text = L"Input Keyword";
+                    this->searchMode->AutoSize = true;
+                    this->searchMode->Location = System::Drawing::Point(12, 29);
+                    this->searchMode->Name = L"searchMode";
+                    this->searchMode->Size = System::Drawing::Size(97, 17);
+                    this->searchMode->TabIndex = 5;
+                    this->searchMode->Text = L"Input Keyword";
                     //
                     // btnSwSearchMode
                     //
@@ -320,8 +360,9 @@ namespace cs163dictionaryproject {
                     this->btnSwSearchMode->Name = L"btnSwSearchMode";
                     this->btnSwSearchMode->Size = System::Drawing::Size(75, 75);
                     this->btnSwSearchMode->TabIndex = 6;
-                    this->btnSwSearchMode->Text = L"Definition -> Keyword";
+                    this->btnSwSearchMode->Text = L"Definition to Keyword";
                     this->btnSwSearchMode->UseVisualStyleBackColor = true;
+                    this->btnSwSearchMode->Click += gcnew System::EventHandler(this, &mainFunction::btnSwSearchMode_Click);
                     //
                     // btnViewFavor
                     //
@@ -334,9 +375,9 @@ namespace cs163dictionaryproject {
                     //
                     // btnAddNewkey
                     //
-                    this->btnAddNewkey->Location = System::Drawing::Point(402, 29);
+                    this->btnAddNewkey->Location = System::Drawing::Point(402, 12);
                     this->btnAddNewkey->Name = L"btnAddNewkey";
-                    this->btnAddNewkey->Size = System::Drawing::Size(66, 56);
+                    this->btnAddNewkey->Size = System::Drawing::Size(66, 73);
                     this->btnAddNewkey->TabIndex = 8;
                     this->btnAddNewkey->Text = L"New word";
                     this->btnAddNewkey->UseVisualStyleBackColor = true;
@@ -434,21 +475,71 @@ namespace cs163dictionaryproject {
                     this->newDef->Size = System::Drawing::Size(212, 22);
                     this->newDef->TabIndex = 1;
                     //
+                    // panSwDataset
+                    //
+                    this->panSwDataset->Controls->Add(this->btnConfSwData);
+                    this->panSwDataset->Controls->Add(this->dataSetOpt);
+                    this->panSwDataset->Location = System::Drawing::Point(0, 178);
+                    this->panSwDataset->Name = L"panSwDataset";
+                    this->panSwDataset->Size = System::Drawing::Size(574, 100);
+                    this->panSwDataset->TabIndex = 11;
+                    //
+                    // btnConfSwData
+                    //
+                    this->btnConfSwData->Location = System::Drawing::Point(383, 26);
+                    this->btnConfSwData->Name = L"btnConfSwData";
+                    this->btnConfSwData->Size = System::Drawing::Size(75, 23);
+                    this->btnConfSwData->TabIndex = 1;
+                    this->btnConfSwData->Text = L"Switch";
+                    this->btnConfSwData->UseVisualStyleBackColor = true;
+                    this->btnConfSwData->Click += gcnew System::EventHandler(this, &mainFunction::btnConfSwData_Click);
+                    //
+                    // dataSetOpt
+                    //
+                    this->dataSetOpt->FormattingEnabled = true;
+                    this->dataSetOpt->Location = System::Drawing::Point(100, 25);
+                    this->dataSetOpt->Name = L"dataSetOpt";
+                    this->dataSetOpt->Size = System::Drawing::Size(255, 24);
+                    this->dataSetOpt->TabIndex = 0;
+                    //
+                    // btnResetDatset
+                    //
+                    this->btnResetDatset->Location = System::Drawing::Point(475, 12);
+                    this->btnResetDatset->Name = L"btnResetDatset";
+                    this->btnResetDatset->Size = System::Drawing::Size(75, 23);
+                    this->btnResetDatset->TabIndex = 12;
+                    this->btnResetDatset->Text = L"Reset";
+                    this->btnResetDatset->UseVisualStyleBackColor = true;
+                    this->btnResetDatset->Click += gcnew System::EventHandler(this, &mainFunction::btnResetDatset_Click);
+                    //
+                    // btnGameOn
+                    //
+                    this->btnGameOn->Location = System::Drawing::Point(223, 553);
+                    this->btnGameOn->Name = L"btnGameOn";
+                    this->btnGameOn->Size = System::Drawing::Size(75, 23);
+                    this->btnGameOn->TabIndex = 13;
+                    this->btnGameOn->Text = L"Practice";
+                    this->btnGameOn->UseVisualStyleBackColor = true;
+                    this->btnGameOn->Click += gcnew System::EventHandler(this, &mainFunction::btnGameOn_Click);
+                    //
                     // mainFunction
                     //
                     this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
                     this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
                     this->ClientSize = System::Drawing::Size(565, 609);
-                    this->Controls->Add(this->panEditDef);
-                    this->Controls->Add(this->panAddNewkey);
+                    this->Controls->Add(this->btnGameOn);
+                    this->Controls->Add(this->btnResetDatset);
                     this->Controls->Add(this->btnAddNewkey);
                     this->Controls->Add(this->btnViewFavor);
                     this->Controls->Add(this->btnSwSearchMode);
-                    this->Controls->Add(this->label1);
+                    this->Controls->Add(this->searchMode);
                     this->Controls->Add(this->btnSwData);
                     this->Controls->Add(this->panShowDef);
                     this->Controls->Add(this->searchBox);
                     this->Controls->Add(this->btnSearch);
+                    this->Controls->Add(this->panAddNewkey);
+                    this->Controls->Add(this->panSwDataset);
+                    this->Controls->Add(this->panEditDef);
                     this->Name = L"mainFunction";
                     this->Text = L"mainFunction";
                     this->panShowDef->ResumeLayout(false);
@@ -457,6 +548,7 @@ namespace cs163dictionaryproject {
                     this->panAddNewkey->PerformLayout();
                     this->panEditDef->ResumeLayout(false);
                     this->panEditDef->PerformLayout();
+                    this->panSwDataset->ResumeLayout(false);
                     this->ResumeLayout(false);
                     this->PerformLayout();
                 }
@@ -515,10 +607,103 @@ namespace cs163dictionaryproject {
                 return;
             }
 
-            string keyword = search(key, convertToString(kwLabel->Text))->content;
+            string keyword = search(key, convertToString(keyLabel->Text))->content;
             editDefinition(def, key, search(key, keyword), convertToString(newDef->Text));
             defLabel->Text = newDef->Text;
             btnConfirmEdit->PerformClick();
         }
-};
-}
+
+    private:
+        System::Void btnSearch_Click(System::Object ^ sender, System::EventArgs ^ e)
+        {
+            TrieNode* result;
+            if (searchMode->Text == L"Input Keyword") {
+                result = search(key, convertToString(searchBox->Text));
+                if (!result)
+                    return;
+                panShowDef->Show();
+                keyLabel->Text = searchBox->Text;
+                defLabel->Text = convertString(result->content);
+            } else {
+                result = search(def, convertToString(searchBox->Text));
+                if (!result)
+                    return;
+                panShowDef->Show();
+                keyLabel->Text = convertString(result->content);
+                defLabel->Text = searchBox->Text;
+            }
+        }
+
+    private:
+        System::Void btnRemove_Click(System::Object ^ sender, System::EventArgs ^ e)
+        {
+            System::Windows::Forms::DialogResult dialogResult = MessageBox::Show("Are you sure?", "Warning", MessageBoxButtons::YesNo, MessageBoxIcon::Exclamation);
+            if (dialogResult == System::Windows::Forms::DialogResult::No) {
+                return;
+            }
+            remove(key, convertToString(keyLabel->Text));
+            panShowDef->Hide();
+            MessageBox::Show("Deleted " + keyLabel->Text + " succesfully!", "Status", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
+        }
+
+    private:
+        System::Void btnSwSearchMode_Click(System::Object ^ sender, System::EventArgs ^ e)
+        {
+            if (searchMode->Text == L"Input Keyword") {
+                searchMode->Text == L"Input Definition";
+                btnSwSearchMode->Text = L"Keyword to Definition";
+                panShowDef->Hide();
+                searchBox->Text = L"";
+            } else {
+                searchMode->Text == L"Input Keyword";
+                btnSwSearchMode->Text = L"Definition to Keyword";
+                panShowDef->Hide();
+                searchBox->Text = L"";
+            }
+        }
+
+    private:
+        System::Void btnSwData_Click(System::Object ^ sender, System::EventArgs ^ e)
+        {
+            if (panSwDataset->Visible)
+                panSwDataset->Hide();
+            else {
+                dataSetOpt->Text = curDataset;
+                panSwDataset->Show();
+            }
+        }
+
+    private:
+        System::Void btnConfSwData_Click(System::Object ^ sender, System::EventArgs ^ e)
+        {
+            if (dataSetOpt->Text != curDataset) {
+                curDataset = dataSetOpt->Text;
+                FullDictTree dictTree = ChooseDataSet(key, def, convertToString(curDataset));
+                key = dictTree.key;
+                def = dictTree.def;
+                panShowDef->Hide();
+            }
+            btnSwData->PerformClick();
+        }
+
+    private:
+        System::Void btnResetDatset_Click(System::Object ^ sender, System::EventArgs ^ e)
+        {
+            System::Windows::Forms::DialogResult dialogResult = MessageBox::Show("Are you sure?", "Warning", MessageBoxButtons::YesNo, MessageBoxIcon::Exclamation);
+            if (dialogResult == System::Windows::Forms::DialogResult::No) {
+                return;
+            }
+            FullDictTree dictTree = ChooseDataSet(key, def, convertToString(curDataset));
+            key = dictTree.key;
+            def = dictTree.def;
+            MessageBox::Show("Dataset " + curDataset + " loaded!", "Status", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
+        }
+
+    private:
+        System::Void btnGameOn_Click(System::Object ^ sender, System::EventArgs ^ e)
+        {
+            game^ gam = gcnew game(def, wordNum);
+            gam->ShowDialog();
+        }
+            };
+            }

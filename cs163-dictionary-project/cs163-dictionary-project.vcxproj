@@ -137,6 +137,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="game.resx">
+      <DependentUpon>game.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="mainFunction.resx">
       <DependentUpon>mainFunction.h</DependentUpon>
     </EmbeddedResource>
