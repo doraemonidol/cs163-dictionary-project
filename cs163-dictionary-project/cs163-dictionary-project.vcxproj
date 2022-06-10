@@ -122,15 +122,27 @@
   <ItemGroup>
     <ClCompile Include="feature.cpp" />
     <ClCompile Include="function.cpp" />
+    <ClCompile Include="game.cpp" />
     <ClCompile Include="mainFunction.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="feature.h" />
     <ClInclude Include="function.h" />
+    <ClInclude Include="game.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="main.h" />
     <ClInclude Include="mainFunction.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="game.resx">
+      <DependentUpon>game.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mainFunction.resx">
+      <DependentUpon>mainFunction.h</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
