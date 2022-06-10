@@ -124,6 +124,7 @@
     <ClCompile Include="function.cpp" />
     <ClCompile Include="Long.cpp" />
     <ClCompile Include="mainFunction.cpp" />
+    <ClCompile Include="Shiba.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="feature.h" />

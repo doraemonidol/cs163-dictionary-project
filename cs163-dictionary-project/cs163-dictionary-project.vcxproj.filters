@@ -27,6 +27,9 @@
     <ClCompile Include="Long.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Shiba.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mainFunction.h">
