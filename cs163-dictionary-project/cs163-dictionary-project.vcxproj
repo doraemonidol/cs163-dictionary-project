@@ -124,6 +124,7 @@
     <ClCompile Include="function.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="mainFunction.cpp" />
+    <ClCompile Include="Thinh.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="feature.h" />
