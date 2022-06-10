@@ -123,6 +123,8 @@
     <ClCompile Include="feature.cpp" />
     <ClCompile Include="function.cpp" />
     <ClCompile Include="Long.cpp" />
+    <ClCompile Include="game.cpp" />
+    <ClCompile Include="hung.cpp" />
     <ClCompile Include="mainFunction.cpp" />
     <ClCompile Include="Thinh.cpp" />
     <ClCompile Include="Shiba.cpp" />

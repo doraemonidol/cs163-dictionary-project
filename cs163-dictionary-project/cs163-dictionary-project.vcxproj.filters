@@ -33,6 +33,9 @@
     <ClCompile Include="Thinh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="hung.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mainFunction.h">

@@ -1,5 +1,4 @@
-#pragma once
-#include "main.h"
+#pragma once	
 TrieNode* getNode(void);
 bool insert(TrieNode* root, string key, string content);
 
