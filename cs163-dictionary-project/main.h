@@ -35,3 +35,7 @@ struct TrieNode {
 	string content = "";
 };
 
+struct HistoryNode {
+	string word = "";
+	HistoryNode* next = nullptr;
+};

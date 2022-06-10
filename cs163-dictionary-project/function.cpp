@@ -8,7 +8,7 @@ TrieNode* getNode(void) {
 	return pNode;
 }
 
-void insert(TrieNode* root, string key, string content) {
+bool insert(TrieNode* root, string key, string content) {
 	TrieNode* pCur = root;
 	for (int i = 0; i < key.length(); i++) {
 		int index = key[i];
@@ -17,8 +17,12 @@ void insert(TrieNode* root, string key, string content) {
 		pCur->childcount++;
 		pCur = pCur->children[index];
 	}
-	pCur->isEndOfWord = true;
-	pCur->content = content;
+	if (!pCur->isEndOfWord) {
+		pCur->isEndOfWord = true;
+		pCur->content = content;
+		return true;
+	}
+	return false;
 }
 
 TrieNode* search(TrieNode* root, string key) {
