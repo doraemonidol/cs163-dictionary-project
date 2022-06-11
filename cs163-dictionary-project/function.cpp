@@ -30,6 +30,7 @@ bool insert(TrieNode*& root, string key, string content) {
 }
 
 TrieNode* search(TrieNode* root, string key) {
+    if (root) return nullptr;
 	TrieNode* pCur = root;
 	for (int i = 0; i < key.length(); i++) {
 		int index = key[i];
@@ -48,7 +49,7 @@ bool isEmpty(TrieNode* root)
 
 bool remove(TrieNode* root, string& key, int depth) {
 	if (!root)
-		return NULL;
+		return false;
 	if (depth == key.size()) {
 		if (root->isEndOfWord)
 			root->isEndOfWord = false;
