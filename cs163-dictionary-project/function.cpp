@@ -30,7 +30,8 @@ bool insert(TrieNode*& root, string key, string content) {
 }
 
 TrieNode* search(TrieNode* root, string key) {
-    if (root) return nullptr;
+    if (!root)
+        return nullptr;
 	TrieNode* pCur = root;
 	for (int i = 0; i < key.length(); i++) {
 		int index = key[i];
@@ -44,6 +45,8 @@ TrieNode* search(TrieNode* root, string key) {
 
 bool isEmpty(TrieNode* root)
 {
+    if (!root)
+        return true;
 	return root->childcount == 0;
 }
 
@@ -175,8 +178,8 @@ bool TrieOption()
             RemoveAll(root);
             ChooseDataSet(root, choose);
         }
-        */
-        return true;
+    */
+    return true;
 }
 
 void inputData(string& curDatset) {
