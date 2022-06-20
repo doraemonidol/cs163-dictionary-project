@@ -204,6 +204,7 @@ void FileToTrie(ifstream& f, TrieNode*& trie) {
     stack<TrieNode*> st;
     while (getline(f, s)) {
         pCur = trie;
+        st = stack<TrieNode*>();
         for (char c : s) {
             if (c == 9) {//tab character
                 pCur = st.top();
