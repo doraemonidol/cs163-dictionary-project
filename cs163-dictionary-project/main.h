@@ -16,6 +16,7 @@
 #include <string>
 #include <winuser.h>
 #include <vector>
+#include <stack>
 using namespace std;
 using namespace System;
 using namespace System::Windows::Forms;

@@ -196,3 +196,30 @@ void inputData(string& curDatset) {
         curDatset = datasetName[0];
     }
 }
+
+void FileToTrie(ifstream& f, TrieNode*& trie) {
+    string s;
+    trie = getNode();
+    TrieNode* pCur;
+    stack<TrieNode*> st;
+    while (getline(f, s)) {
+        pCur = trie;
+        for (char c : s) {
+            if (c == 9) {//tab character
+                pCur = st.top();
+                st.pop();
+            }
+            else {
+                pCur->children[c] = getNode();
+                pCur->childcount++;
+                st.push(pCur);
+                pCur = pCur->children[c];
+            }
+        }
+        pCur->isEndOfWord = true;
+    }
+}
+
+void TrieToFile(ofstream& f, TrieNode*& trie) {
+
+}

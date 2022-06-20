@@ -16,3 +16,6 @@ bool TrieOption();
 void randomWord(TrieNode* root, string& key, string& def, int n);
 TrieNode* traverse(TrieNode* root, string& res, int n, int x);
 int randomNum(int n);
+
+void FileToTrie(ifstream& f, TrieNode*& trie);
+void TrieToFile(ofstream& f, TrieNode*& trie);
