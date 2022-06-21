@@ -20,11 +20,13 @@ namespace cs163dictionaryproject {
 	public ref class mainFunction : public System::Windows::Forms::Form
 	{
             public:
-                TrieNode *def, *key, *fav;
+                TrieNode *def, *key, *fav;//, **sug;
                 HistoryNode* his;
-                int wordNum;
-                String ^ curDataset;
+                int wordNum, nSug = 0;
+                String ^ curDataset = L"", ^preSearch = L"";
                 bool Exit1 = false;
+                List<Suggestion ^> ^ sug;
+          
 
             private:
                 System::Windows::Forms::Panel ^ panAddNewkey;
@@ -136,6 +138,21 @@ namespace cs163dictionaryproject {
 
             private:
                 System::Windows::Forms::Button ^ btCloseBG;
+
+            private:
+                System::Windows::Forms::ListBox ^ suggestList;
+
+            private:
+                System::Windows::Forms::Panel ^ suggestPan;
+
+            private:
+
+
+            private:
+                System::Windows::Forms::Button ^ btnCloseSuggest;
+
+            private:
+                System::Windows::Forms::Button ^ btnCloseSuggestBox;
 
             private:
 
@@ -322,11 +339,16 @@ namespace cs163dictionaryproject {
                     this->menuPan = (gcnew System::Windows::Forms::FlowLayoutPanel());
                     this->backgroundWorker1 = (gcnew System::ComponentModel::BackgroundWorker());
                     this->btCloseBG = (gcnew System::Windows::Forms::Button());
+                    this->suggestList = (gcnew System::Windows::Forms::ListBox());
+                    this->suggestPan = (gcnew System::Windows::Forms::Panel());
+                    this->btnCloseSuggest = (gcnew System::Windows::Forms::Button());
+                    this->btnCloseSuggestBox = (gcnew System::Windows::Forms::Button());
                     this->panShowDef->SuspendLayout();
                     this->panAddNewkey->SuspendLayout();
                     this->panEditDef->SuspendLayout();
                     this->panSwDataset->SuspendLayout();
                     this->menuPan->SuspendLayout();
+                    this->suggestPan->SuspendLayout();
                     this->SuspendLayout();
                     //
                     // btnSearch
@@ -361,7 +383,10 @@ namespace cs163dictionaryproject {
                     this->searchBox->Name = L"searchBox";
                     this->searchBox->Size = System::Drawing::Size(858, 28);
                     this->searchBox->TabIndex = 1;
-                    this->searchBox->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &mainFunction::searchBox_KeyDown);
+                    this->searchBox->Click += gcnew System::EventHandler(this, &mainFunction::searchBox_Click);
+                    this->searchBox->MouseClick += gcnew System::Windows::Forms::MouseEventHandler(this, &mainFunction::searchBox_MouseClick);
+                    this->searchBox->TextChanged += gcnew System::EventHandler(this, &mainFunction::searchBox_TextChanged);
+                    this->searchBox->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &mainFunction::searchBox_MouseDown);
                     //
                     // panShowDef
                     //
@@ -929,6 +954,75 @@ namespace cs163dictionaryproject {
                     this->btCloseBG->MouseLeave += gcnew System::EventHandler(this, &mainFunction::btCloseBG_MouseLeave);
                     this->btCloseBG->MouseHover += gcnew System::EventHandler(this, &mainFunction::btCloseBG_MouseEnter);
                     //
+                    // suggestList
+                    //
+                    this->suggestList->Anchor = System::Windows::Forms::AnchorStyles::Top;
+                    this->suggestList->BackColor = System::Drawing::SystemColors::InfoText;
+                    this->suggestList->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+                    this->suggestList->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12.5F));
+                    this->suggestList->ForeColor = System::Drawing::SystemColors::Info;
+                    this->suggestList->FormattingEnabled = true;
+                    this->suggestList->ItemHeight = 30;
+                    this->suggestList->Location = System::Drawing::Point(2, 3);
+                    this->suggestList->Name = L"suggestList";
+                    this->suggestList->Size = System::Drawing::Size(841, 362);
+                    this->suggestList->TabIndex = 33;
+                    this->suggestList->SelectedIndexChanged += gcnew System::EventHandler(this, &mainFunction::suggestList_SelectedIndexChanged);
+                    //
+                    // suggestPan
+                    //
+                    this->suggestPan->Anchor = System::Windows::Forms::AnchorStyles::Top;
+                    this->suggestPan->Controls->Add(this->btnCloseSuggest);
+                    this->suggestPan->Controls->Add(this->btnCloseSuggestBox);
+                    this->suggestPan->Controls->Add(this->suggestList);
+                    this->suggestPan->Location = System::Drawing::Point(47, 133);
+                    this->suggestPan->Name = L"suggestPan";
+                    this->suggestPan->Size = System::Drawing::Size(908, 401);
+                    this->suggestPan->TabIndex = 34;
+                    this->suggestPan->Visible = false;
+                    //
+                    // btnCloseSuggest
+                    //
+                    this->btnCloseSuggest->BackColor = System::Drawing::Color::Transparent;
+                    this->btnCloseSuggest->BackgroundImage = (cli::safe_cast<System::Drawing::Image ^>(resources->GetObject(L"btnCloseSuggest.BackgroundImage")));
+                    this->btnCloseSuggest->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+                    this->btnCloseSuggest->FlatAppearance->BorderColor = System::Drawing::Color::Black;
+                    this->btnCloseSuggest->FlatAppearance->BorderSize = 0;
+                    this->btnCloseSuggest->FlatAppearance->MouseDownBackColor = System::Drawing::Color::Transparent;
+                    this->btnCloseSuggest->FlatAppearance->MouseOverBackColor = System::Drawing::Color::Transparent;
+                    this->btnCloseSuggest->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+                    this->btnCloseSuggest->ForeColor = System::Drawing::Color::Transparent;
+                    this->btnCloseSuggest->Location = System::Drawing::Point(863, 16);
+                    this->btnCloseSuggest->Margin = System::Windows::Forms::Padding(3, 10, 10, 3);
+                    this->btnCloseSuggest->Name = L"btnCloseSuggest";
+                    this->btnCloseSuggest->Size = System::Drawing::Size(16, 16);
+                    this->btnCloseSuggest->TabIndex = 35;
+                    this->btnCloseSuggest->UseMnemonic = false;
+                    this->btnCloseSuggest->UseVisualStyleBackColor = false;
+                    this->btnCloseSuggest->Click += gcnew System::EventHandler(this, &mainFunction::btnCloseSuggestBox_Click);
+                    this->btnCloseSuggest->MouseEnter += gcnew System::EventHandler(this, &mainFunction::btnCloseSuggest_MouseEnter);
+                    this->btnCloseSuggest->MouseLeave += gcnew System::EventHandler(this, &mainFunction::btnCloseSuggest_MouseLeave);
+                    this->btnCloseSuggest->MouseHover += gcnew System::EventHandler(this, &mainFunction::btnCloseSuggest_MouseEnter);
+                    //
+                    // btnCloseSuggestBox
+                    //
+                    this->btnCloseSuggestBox->BackColor = System::Drawing::Color::Transparent;
+                    this->btnCloseSuggestBox->BackgroundImageLayout = System::Windows::Forms::ImageLayout::None;
+                    this->btnCloseSuggestBox->FlatAppearance->BorderColor = System::Drawing::Color::White;
+                    this->btnCloseSuggestBox->FlatAppearance->BorderSize = 0;
+                    this->btnCloseSuggestBox->FlatAppearance->MouseOverBackColor = System::Drawing::Color::Transparent;
+                    this->btnCloseSuggestBox->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+                    this->btnCloseSuggestBox->ForeColor = System::Drawing::Color::Transparent;
+                    this->btnCloseSuggestBox->Location = System::Drawing::Point(857, 9);
+                    this->btnCloseSuggestBox->Name = L"btnCloseSuggestBox";
+                    this->btnCloseSuggestBox->Size = System::Drawing::Size(30, 30);
+                    this->btnCloseSuggestBox->TabIndex = 36;
+                    this->btnCloseSuggestBox->UseVisualStyleBackColor = false;
+                    this->btnCloseSuggestBox->Click += gcnew System::EventHandler(this, &mainFunction::btnCloseSuggestBox_Click);
+                    this->btnCloseSuggestBox->MouseEnter += gcnew System::EventHandler(this, &mainFunction::btnCloseSuggest_MouseEnter);
+                    this->btnCloseSuggestBox->MouseLeave += gcnew System::EventHandler(this, &mainFunction::btnCloseSuggest_MouseLeave);
+                    this->btnCloseSuggestBox->MouseHover += gcnew System::EventHandler(this, &mainFunction::btnCloseSuggest_MouseEnter);
+                    //
                     // mainFunction
                     //
                     this->AutoScaleDimensions = System::Drawing::SizeF(15, 37);
@@ -936,7 +1030,9 @@ namespace cs163dictionaryproject {
                     this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(5)), static_cast<System::Int32>(static_cast<System::Byte>(5)),
                         static_cast<System::Int32>(static_cast<System::Byte>(5)));
                     this->ClientSize = System::Drawing::Size(995, 682);
+                    this->Controls->Add(this->suggestPan);
                     this->Controls->Add(this->menuPan);
+                    this->Controls->Add(this->panShowDef);
                     this->Controls->Add(this->panel2);
                     this->Controls->Add(this->btnShowFunc);
                     this->Controls->Add(this->btMinimise);
@@ -949,7 +1045,6 @@ namespace cs163dictionaryproject {
                     this->Controls->Add(this->panEditDef);
                     this->Controls->Add(this->panSwDataset);
                     this->Controls->Add(this->btCloseBG);
-                    this->Controls->Add(this->panShowDef);
                     this->Controls->Add(this->panAddNewkey);
                     this->Font = (gcnew System::Drawing::Font(L"Segoe UI", 16.2F));
                     this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
@@ -957,6 +1052,7 @@ namespace cs163dictionaryproject {
                     this->Name = L"mainFunction";
                     this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
                     this->Text = L"Fantastic Dictionary";
+                    this->Load += gcnew System::EventHandler(this, &mainFunction::mainFunction_Load);
                     this->panShowDef->ResumeLayout(false);
                     this->panShowDef->PerformLayout();
                     this->panAddNewkey->ResumeLayout(false);
@@ -965,6 +1061,7 @@ namespace cs163dictionaryproject {
                     this->panEditDef->PerformLayout();
                     this->panSwDataset->ResumeLayout(false);
                     this->menuPan->ResumeLayout(false);
+                    this->suggestPan->ResumeLayout(false);
                     this->ResumeLayout(false);
                     this->PerformLayout();
                 }
@@ -1186,11 +1283,144 @@ namespace cs163dictionaryproject {
         }
 
     private:
+        Void updateSuggestList(TrieNode* root, string& res, int &n, int x, const string BASE_TEXT)
+        {
+            if (!root || n == SUGGEST_LIST)
+                return;
+            cout << root->childcount << "<<\n";
+            if (root->isEndOfWord) {
+                suggestList->Items->Add(convertString(BASE_TEXT + res.substr(0, x)));
+                cout << res.substr(0, x) << endl;
+                ++n;
+            }
+            for (int i = 0; i < 128; i++) {
+                if (root->children[i]) {
+                    cout << (char)i << " ";
+                    if (x < res.length())
+                        res[x] = i;
+                    else
+                        res += i;
+
+                    updateSuggestList(root->children[i], res, n, x + 1, BASE_TEXT);
+                }
+            }
+    }
+
+
+    private:
+        System::Void btnCloseSuggestBox_Click(System::Object ^ sender, System::EventArgs ^ e)
+        {
+            suggestPan->Hide();
+        }
+
+    private:
+        System::Void btnCloseSuggest_MouseEnter(System::Object ^ sender, System::EventArgs ^ e)
+        {
+            btnCloseSuggestBox->FlatAppearance->BorderSize = 1;
+        }
+
+    private:
+        System::Void btnCloseSuggest_MouseLeave(System::Object ^ sender, System::EventArgs ^ e)
+        {
+            btnCloseSuggestBox->FlatAppearance->BorderSize = 0;
+        }
+
+    private:
+        System::Void mainFunction_Load(System::Object ^ sender, System::EventArgs ^ e)
+        {
+            sug = gcnew List<Suggestion ^>();
+        }
+
+    private:
         System::Void searchBox_KeyDown(System::Object ^ sender, System::Windows::Forms::KeyEventArgs ^ e)
         {
-            if (e->KeyValue == (int)Keys::Enter) {
-                btnSearch->PerformClick();
+        }
+
+    private:
+        System::Void searchBox_TextChanged(System::Object ^ sender, System::EventArgs ^ e)
+        {
+            cout << "in ";
+            suggestList->Items->Clear();
+            string searchText = convertToString(searchBox->Text), s = convertToString(preSearch);
+            if (searchText.length() >= REQUIRED_CHAR_NUM) {
+                TrieNode* x;
+                string res = "";
+                int n = 0;
+                if (searchText.length() - s.length() == 1 && searchText.substr(0, searchText.length() - 1) == s) {
+                    cout << "add ";
+                    if (sug->Count > 0) {
+                        x = searchContinue(sug[sug->Count - 1]->node, searchText[sug->Count]);
+                        if (!x)
+                            return;
+                        cout << "1\n";
+                        sug->Add(gcnew Suggestion(x));
+                    } else {
+                        x = searchContinue(key, searchText[0]);
+                        if (!x)
+                            return;
+                        cout << "2\n";
+                        sug->Add(gcnew Suggestion(x));
+                    }
+                    preSearch = searchBox->Text;
+                } else {
+                    if (searchText.length() - s.length() == -1 && s.substr(0, s.length() - 1) == searchText) {
+                        cout << "remove ";
+                        sug->RemoveAt(sug->Count - 1);
+                        preSearch = searchBox->Text;
+                    } else {
+                        cout << "none ";
+                        sug->Clear();
+                        x = searchContinue(key, searchText[0]);
+                        if (!x)
+                            return;
+                        cout << "\n"
+                             << searchText[0] << " OK\n";
+                        sug->Add(gcnew Suggestion(x));
+                        for (int i = 1; i < searchText.length(); i++) {
+                            x = searchContinue(sug[i - 1]->node, searchText[i]);
+                            if (!x)
+                                return;
+                            cout << searchText[i] << " OK\n";
+                            sug->Add(gcnew Suggestion(x));
+                        }
+                        preSearch = searchBox->Text;
+                    }
+                }
+                cout << sug->Count - 1 << endl;
+                updateSuggestList(sug[sug->Count - 1]->node, res, n, 0, searchText);
+            } else {
+                HistoryNode* cur = his;
+                while (cur) {
+                    suggestList->Items->Add(convertString(cur->word));
+                    cur = cur->next;
+                }
             }
+        }
+
+    private:
+        System::Void searchBox_Click(System::Object ^ sender, System::EventArgs ^ e)
+        {
+            suggestPan->Show();
+        }
+
+    private:
+        System::Void suggestList_SelectedIndexChanged(System::Object ^ sender, System::EventArgs ^ e)
+        {
+            searchBox->Text = suggestList->GetItemText(suggestList->SelectedItem);
+            suggestPan->Hide();
+            btnSearch->PerformClick();
+        }
+
+    private:
+        System::Void searchBox_MouseDown(System::Object ^ sender, System::Windows::Forms::MouseEventArgs ^ e)
+        {
+            suggestPan->Show();
+        }
+
+    private:
+        System::Void searchBox_MouseClick(System::Object ^ sender, System::Windows::Forms::MouseEventArgs ^ e)
+        {
+            suggestPan->Show();
         }
             };
             }

@@ -48,6 +48,13 @@ TrieNode* search(TrieNode* root, string key) {
 	return nullptr;
 }
 
+TrieNode* searchContinue(TrieNode* root, char c) {
+    if (!root)
+        return nullptr;
+    cout << "searchContinue OK!\n";
+    return root->children[c];
+}
+
 bool isEmpty(TrieNode* root)
 {
     if (!root)
@@ -138,7 +145,7 @@ void InitializeTrie(TrieNode*& key, TrieNode *& def, string path, int &wordcount
         }
         insert(key, Word, Content);
         insert(def, Content, Word);
-        cout << Word << " " << Content << endl;
+        //cout << Word << " " << Content << endl;
         wordcount++;
     }
     f.close();

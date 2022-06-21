@@ -9,7 +9,7 @@ using namespace System::Windows::Forms;
 void main() {
     srand(time(NULL));
     TrieNode* fav = 0, * key = 0, * def = 0;
-    HistoryNode* his;
+    HistoryNode* his = 0;
     int wordCount;
     string curDataset;
     ShowWindow(GetConsoleWindow(), SW_SHOW);

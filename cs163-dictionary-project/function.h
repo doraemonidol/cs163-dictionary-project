@@ -3,6 +3,7 @@
 TrieNode* getNode();
 bool insert(TrieNode*& root, string key, string content);
 TrieNode* search(TrieNode* root, string key);
+TrieNode* searchContinue(TrieNode* root, char c);
 bool isEmpty(TrieNode* root);
 bool remove(TrieNode* root, string& key, int depth = 0);
 bool AddKey(TrieNode* keywordTrie, TrieNode* definitionTrie, string& keyword, string& definition);

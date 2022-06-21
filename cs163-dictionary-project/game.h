@@ -106,6 +106,9 @@ private:
         // otp1
         //
         this->otp1->BackColor = System::Drawing::Color::Transparent;
+        this->otp1->FlatAppearance->MouseDownBackColor = System::Drawing::Color::Gray;
+        this->otp1->FlatAppearance->MouseOverBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(50)),
+            static_cast<System::Int32>(static_cast<System::Byte>(50)), static_cast<System::Int32>(static_cast<System::Byte>(50)));
         this->otp1->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
         this->otp1->Font = (gcnew System::Drawing::Font(L"Segoe UI", 10.5F, System::Drawing::FontStyle::Bold));
         this->otp1->ForeColor = System::Drawing::Color::White;
@@ -122,6 +125,9 @@ private:
         // otp2
         //
         this->otp2->BackColor = System::Drawing::Color::Transparent;
+        this->otp2->FlatAppearance->MouseDownBackColor = System::Drawing::Color::Gray;
+        this->otp2->FlatAppearance->MouseOverBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(50)),
+            static_cast<System::Int32>(static_cast<System::Byte>(50)), static_cast<System::Int32>(static_cast<System::Byte>(50)));
         this->otp2->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
         this->otp2->Font = (gcnew System::Drawing::Font(L"Segoe UI", 10.5F, System::Drawing::FontStyle::Bold));
         this->otp2->ForeColor = System::Drawing::Color::White;
@@ -138,6 +144,9 @@ private:
         // otp3
         //
         this->otp3->BackColor = System::Drawing::Color::Transparent;
+        this->otp3->FlatAppearance->MouseDownBackColor = System::Drawing::Color::Gray;
+        this->otp3->FlatAppearance->MouseOverBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(50)),
+            static_cast<System::Int32>(static_cast<System::Byte>(50)), static_cast<System::Int32>(static_cast<System::Byte>(50)));
         this->otp3->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
         this->otp3->Font = (gcnew System::Drawing::Font(L"Segoe UI", 10.5F, System::Drawing::FontStyle::Bold));
         this->otp3->ForeColor = System::Drawing::Color::White;
@@ -154,6 +163,9 @@ private:
         // otp4
         //
         this->otp4->BackColor = System::Drawing::Color::Transparent;
+        this->otp4->FlatAppearance->MouseDownBackColor = System::Drawing::Color::Gray;
+        this->otp4->FlatAppearance->MouseOverBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(50)),
+            static_cast<System::Int32>(static_cast<System::Byte>(50)), static_cast<System::Int32>(static_cast<System::Byte>(50)));
         this->otp4->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
         this->otp4->Font = (gcnew System::Drawing::Font(L"Segoe UI", 10.5F, System::Drawing::FontStyle::Bold));
         this->otp4->ForeColor = System::Drawing::Color::White;
@@ -182,6 +194,9 @@ private:
         // switchGameMode
         //
         this->switchGameMode->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
+        this->switchGameMode->FlatAppearance->MouseDownBackColor = System::Drawing::Color::Gray;
+        this->switchGameMode->FlatAppearance->MouseOverBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(50)),
+            static_cast<System::Int32>(static_cast<System::Byte>(50)), static_cast<System::Int32>(static_cast<System::Byte>(50)));
         this->switchGameMode->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
         this->switchGameMode->Font = (gcnew System::Drawing::Font(L"Segoe UI", 10.5F, System::Drawing::FontStyle::Bold));
         this->switchGameMode->ForeColor = System::Drawing::Color::White;

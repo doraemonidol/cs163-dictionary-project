@@ -23,13 +23,28 @@ using namespace System::Windows::Forms;
 #pragma warning(disable : 4996)
 
 const vector<string> datasetName = { "slang.txt", "emotional.txt", "EngToEng.txt", "EngToViet.txt", "VietToEng.txt" };
+const int SUGGEST_LIST = 20;
+const int REQUIRED_CHAR_NUM = 1;
 
 struct TrieNode {
-	TrieNode* children[128]; //26
-	bool isEndOfWord = false;
-	int childcount = 0;
-	string content = "";
+    TrieNode* children[128]; //26
+    bool isEndOfWord = false;
+    int childcount = 0;
+    string content = "";
 };
+
+namespace cs163dictionaryproject {
+public
+ref class Suggestion : public System::Object {
+public:
+    TrieNode* node;
+
+public:
+    Suggestion(TrieNode* in) {
+        node = in;
+    }
+};
+}
 
 struct HistoryNode {
 	string word = "";
