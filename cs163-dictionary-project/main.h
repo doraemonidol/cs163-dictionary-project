@@ -26,7 +26,7 @@ const vector<string> datasetName = { "slang.txt", "emotional.txt", "EngToEng.txt
 
 struct TrieNode {
 	TrieNode* children[128]; //26
-	bool isEndOfWord;
+	bool isEndOfWord = false;
 	int childcount = 0;
 	string content = "";
 };

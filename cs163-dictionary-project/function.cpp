@@ -1,6 +1,7 @@
 #include "main.h"
 #include "feature.h"
 #include "function.h"
+#include "mainFunction.h"
 
 TrieNode* getNode() {
 	TrieNode* pNode = new TrieNode;
@@ -22,6 +23,7 @@ bool insert(TrieNode*& root, string key, string content) {
 		pCur = pCur->children[index];
 	}
 	if (!pCur->isEndOfWord) {
+           // cout << "ended";
 		pCur->isEndOfWord = true;
 		pCur->content = content;
 		return true;
@@ -32,14 +34,17 @@ bool insert(TrieNode*& root, string key, string content) {
 TrieNode* search(TrieNode* root, string key) {
     if (!root)
         return nullptr;
+    //cout << "go";
 	TrieNode* pCur = root;
 	for (int i = 0; i < key.length(); i++) {
 		int index = key[i];
+            cout << i << " ";
 		if (!pCur->children[index])
 			return nullptr;
 		pCur = pCur->children[index];
 	}
 	if (pCur->isEndOfWord) return pCur;
+       //cout << "no";
 	return nullptr;
 }
 
@@ -103,9 +108,9 @@ bool isLeafNode(TrieNode* root)
     return root->isEndOfWord != false;
 }
 
-void InitializeTrie(TrieNode*& key, TrieNode *& def, string path)
+void InitializeTrie(TrieNode*& key, TrieNode *& def, string path, int &wordcount)
 {
-    ifstream f(path);
+    ifstream f("./dataset/" + path);
     bool checkEndofWord;
     string str, Word, Content;
     char check;
@@ -122,15 +127,19 @@ void InitializeTrie(TrieNode*& key, TrieNode *& def, string path)
         for (int i = 0; i < str.length(); i++) {
             if (str[i] == check) {
                 checkEndofWord = true;
-                Word += '\0';
+                //Word += '\0';
+                continue;
             }
             if (!checkEndofWord)
                 Word += str[i];
-            else
+            else {
                 Content += str[i];
+            }
         }
         insert(key, Word, Content);
         insert(def, Content, Word);
+        cout << Word << " " << Content << endl;
+        wordcount++;
     }
     f.close();
 }
@@ -146,12 +155,12 @@ void RemoveAll(TrieNode*& root)
     root = nullptr;
 }
 
-FullDictTree ChooseDataSet(TrieNode* key, TrieNode* def, string datasetName)
+FullDictTree ChooseDataSet(TrieNode* key, TrieNode* def, string datasetName, int &wordcount)
 {
-    ofstream f("fanstatic4.txt");
+    ofstream f("./dataset/fanstatic4.txt");
     RemoveAll(key);
     RemoveAll(def);
-    InitializeTrie(key, def, datasetName);
+    InitializeTrie(key, def, datasetName, wordcount);
     // WRITE TRIE TO FILE here <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     FullDictTree dict;
     dict.key = key;
@@ -164,7 +173,7 @@ FullDictTree ChooseDataSet(TrieNode* key, TrieNode* def, string datasetName)
 bool TrieOption()
 {
     fstream f;
-    f.open("trie.txt");
+    f.open("./dataset/trie.txt");
     if (f.is_open()) {
         // READ IN BUILT-TRIE HERE
         f.close();
@@ -183,14 +192,14 @@ bool TrieOption()
 }
 
 void inputData(string& curDatset) {
-    ifstream f("fantastic4.txt");
+    ifstream f("./dataset/fantastic4.txt");
     if (f.is_open()) {
         getline(f, curDatset);
         // INPUT TRIE FROM FILE here <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         f.close();
     } else {
         f.close();
-        ofstream o("fantastic4.txt");
+        ofstream o("./dataset/fantastic4.txt");
         o << datasetName[0] << endl;
         o.close();
         curDatset = datasetName[0];

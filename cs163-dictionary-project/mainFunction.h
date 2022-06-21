@@ -361,6 +361,7 @@ namespace cs163dictionaryproject {
                     this->searchBox->Name = L"searchBox";
                     this->searchBox->Size = System::Drawing::Size(858, 28);
                     this->searchBox->TabIndex = 1;
+                    this->searchBox->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &mainFunction::searchBox_KeyDown);
                     //
                     // panShowDef
                     //
@@ -494,7 +495,7 @@ namespace cs163dictionaryproject {
                     this->btnSwSearchMode->Font = (gcnew System::Drawing::Font(L"Segoe UI", 10.5F, System::Drawing::FontStyle::Bold));
                     this->btnSwSearchMode->ForeColor = System::Drawing::Color::White;
                     this->btnSwSearchMode->ImageAlign = System::Drawing::ContentAlignment::TopCenter;
-                    this->btnSwSearchMode->Location = System::Drawing::Point(220, 49);
+                    this->btnSwSearchMode->Location = System::Drawing::Point(220, 43);
                     this->btnSwSearchMode->Margin = System::Windows::Forms::Padding(6, 7, 6, 7);
                     this->btnSwSearchMode->Name = L"btnSwSearchMode";
                     this->btnSwSearchMode->Size = System::Drawing::Size(226, 48);
@@ -1033,6 +1034,7 @@ namespace cs163dictionaryproject {
         {
             TrieNode* result;
             if (searchMode->Text == L"Input Keyword") {
+                cout << convertToString(searchBox->Text);
                 result = search(key, convertToString(searchBox->Text));
                 if (!result)
                     return;
@@ -1093,7 +1095,9 @@ namespace cs163dictionaryproject {
         {
             if (dataSetOpt->Text != curDataset) {
                 curDataset = dataSetOpt->Text;
-                FullDictTree dictTree = ChooseDataSet(key, def, convertToString(curDataset));
+                int a;
+                FullDictTree dictTree = ChooseDataSet(key, def, convertToString(curDataset), a);
+                wordNum = a;
                 key = dictTree.key;
                 def = dictTree.def;
                 panShowDef->Hide();
@@ -1108,7 +1112,9 @@ namespace cs163dictionaryproject {
             if (dialogResult == System::Windows::Forms::DialogResult::No) {
                 return;
             }
-            FullDictTree dictTree = ChooseDataSet(key, def, convertToString(curDataset));
+            int a;
+            FullDictTree dictTree = ChooseDataSet(key, def, convertToString(curDataset),a);
+            wordNum = a;
             key = dictTree.key;
             def = dictTree.def;
             MessageBox::Show("Dataset " + curDataset + " loaded!", "Status", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
@@ -1117,7 +1123,7 @@ namespace cs163dictionaryproject {
     private:
         System::Void btnGameOn_Click(System::Object ^ sender, System::EventArgs ^ e)
         {
-            game^ gam = gcnew game(def, wordNum);
+            game^ gam = gcnew game(key, wordNum);
             gam->ShowDialog();
         }
 
@@ -1177,6 +1183,14 @@ namespace cs163dictionaryproject {
                 menuPan->Hide();
             else
                 menuPan->Show();
+        }
+
+    private:
+        System::Void searchBox_KeyDown(System::Object ^ sender, System::Windows::Forms::KeyEventArgs ^ e)
+        {
+            if (e->KeyValue == (int)Keys::Enter) {
+                btnSearch->PerformClick();
+            }
         }
             };
             }

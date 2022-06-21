@@ -1,0 +1,3 @@
+a	(thong tuc) loai a, hang nhat, hang tot nhat hang rat tot
+a b c	bang chu cai
+a b c - book	sach vo long, sach hoc van

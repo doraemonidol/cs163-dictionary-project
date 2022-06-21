@@ -8,13 +8,13 @@ bool remove(TrieNode* root, string& key, int depth = 0);
 bool AddKey(TrieNode* keywordTrie, TrieNode* definitionTrie, string& keyword, string& definition);
 bool RemoveKey(TrieNode* keywordTrie, TrieNode* definitionTrie, string& keyword);
 bool isLeafNode(TrieNode* root);
-void InitializeTrie(TrieNode*& key, TrieNode*& def, string path);
+void InitializeTrie(TrieNode*& key, TrieNode*& def, string path, int& wordcount);
 void RemoveAll(TrieNode*& root);
-FullDictTree ChooseDataSet(TrieNode* key, TrieNode* def, string datasetName);
+FullDictTree ChooseDataSet(TrieNode* key, TrieNode* def, string datasetName, int& wordcount);
 bool TrieOption();
 
 void randomWord(TrieNode* root, string& key, string& def, int n);
-TrieNode* traverse(TrieNode* root, string& res, int n, int x);
+TrieNode* traverse(TrieNode* root, string& res, int &n, int x);
 int randomNum(int n);
 
 void FileToTrie(ifstream& f, TrieNode*& trie);
