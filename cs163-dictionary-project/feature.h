@@ -1,7 +1,7 @@
 #pragma once
 
 void editDefinition(TrieNode* def, TrieNode* key, TrieNode* node, string newDef);
-bool AddFavourite(TrieNode* favouriteTrie, string& keyword);
-bool RemoveFavourite(TrieNode* favouriteTrie, string& keyword);
-void AdjustHistory(HistoryNode*& root, string& keyword);
+TrieNode* AddFavourite(TrieNode* favouriteTrie, string& keyword);
+TrieNode* RemoveFavourite(TrieNode* favouriteTrie, string& keyword);
+HistoryNode* AdjustHistory(HistoryNode* root, string& keyword);
 void ViewFavoriteList(TrieNode* root, string str, int level, Node FList[], int num);

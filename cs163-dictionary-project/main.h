@@ -24,7 +24,8 @@ using namespace System::Windows::Forms;
 
 const vector<string> datasetName = { "slang.txt", "emotional.txt", "EngToEng.txt", "EngToViet.txt", "VietToEng.txt" };
 const int SUGGEST_LIST = 20;
-const int REQUIRED_CHAR_NUM = 1;
+const int REQUIRED_CHAR_NUM = 2;
+const int MAX_HISTORY = 20;
 
 struct TrieNode {
     TrieNode* children[128]; //26

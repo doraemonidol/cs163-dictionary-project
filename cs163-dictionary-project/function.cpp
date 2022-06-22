@@ -94,6 +94,7 @@ bool AddKey(TrieNode* keywordTrie, TrieNode* definitionTrie, string& keyword, st
 {
     if (insert(keywordTrie, keyword, definition)) {
         insert(definitionTrie, definition, keyword);
+        insert(keywordTrie, keyword, definition);
         return true;
     }
     return false;

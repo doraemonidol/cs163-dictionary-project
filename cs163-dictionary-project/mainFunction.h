@@ -56,19 +56,19 @@ namespace cs163dictionaryproject {
 
 
             private:
-                System::Windows::Forms::Panel ^ panEditDef;
+
+
+            private:
+
 
             private:
 
 
             private:
-                System::Windows::Forms::Button ^ btnConfirmEdit;
+
 
             private:
-                System::Windows::Forms::Label ^ label4;
 
-            private:
-                System::Windows::Forms::TextBox ^ newDef;
 
             private:
                 System::Windows::Forms::Panel ^ panSwDataset;
@@ -153,6 +153,51 @@ namespace cs163dictionaryproject {
 
             private:
                 System::Windows::Forms::Button ^ btnCloseSuggestBox;
+
+            private:
+                System::Windows::Forms::Button ^ btnAddedFavor;
+
+            private:
+                System::Windows::Forms::Label ^ label4;
+
+            private:
+                System::Windows::Forms::Button ^ btnConfirmEdit;
+
+            private:
+                System::Windows::Forms::Panel ^ panEditDef;
+
+            private:
+                System::Windows::Forms::Button ^ btnNewDefCancel;
+
+            private:
+                System::Windows::Forms::Panel ^ panel4;
+
+            private:
+                System::Windows::Forms::TextBox ^ newDef;
+
+            private:
+                System::Windows::Forms::Panel ^ panFavor;
+
+            private:
+                System::Windows::Forms::Label ^ label1;
+
+            private:
+                System::Windows::Forms::Button ^ btnCloseFavor;
+
+            private:
+                System::Windows::Forms::Button ^ btnCloseFavorBG;
+
+            private:
+
+
+            private:
+
+
+            private:
+                System::Windows::Forms::ListBox ^ favorList;
+
+            private:
+                System::Windows::Forms::Button ^ btnRandWord;
 
             private:
 
@@ -302,6 +347,7 @@ namespace cs163dictionaryproject {
                     this->btnSearch = (gcnew System::Windows::Forms::Button());
                     this->searchBox = (gcnew System::Windows::Forms::TextBox());
                     this->panShowDef = (gcnew System::Windows::Forms::Panel());
+                    this->btnAddedFavor = (gcnew System::Windows::Forms::Button());
                     this->btnRemove = (gcnew System::Windows::Forms::Button());
                     this->btnEdit = (gcnew System::Windows::Forms::Button());
                     this->btnAddFavor = (gcnew System::Windows::Forms::Button());
@@ -321,10 +367,6 @@ namespace cs163dictionaryproject {
                     this->confAddNewkey = (gcnew System::Windows::Forms::Button());
                     this->label3 = (gcnew System::Windows::Forms::Label());
                     this->label2 = (gcnew System::Windows::Forms::Label());
-                    this->panEditDef = (gcnew System::Windows::Forms::Panel());
-                    this->btnConfirmEdit = (gcnew System::Windows::Forms::Button());
-                    this->label4 = (gcnew System::Windows::Forms::Label());
-                    this->newDef = (gcnew System::Windows::Forms::TextBox());
                     this->panSwDataset = (gcnew System::Windows::Forms::Panel());
                     this->butSwCancel = (gcnew System::Windows::Forms::Button());
                     this->btnConfSwData = (gcnew System::Windows::Forms::Button());
@@ -343,12 +385,25 @@ namespace cs163dictionaryproject {
                     this->suggestPan = (gcnew System::Windows::Forms::Panel());
                     this->btnCloseSuggest = (gcnew System::Windows::Forms::Button());
                     this->btnCloseSuggestBox = (gcnew System::Windows::Forms::Button());
+                    this->label4 = (gcnew System::Windows::Forms::Label());
+                    this->btnConfirmEdit = (gcnew System::Windows::Forms::Button());
+                    this->panEditDef = (gcnew System::Windows::Forms::Panel());
+                    this->btnNewDefCancel = (gcnew System::Windows::Forms::Button());
+                    this->panel4 = (gcnew System::Windows::Forms::Panel());
+                    this->newDef = (gcnew System::Windows::Forms::TextBox());
+                    this->panFavor = (gcnew System::Windows::Forms::Panel());
+                    this->label1 = (gcnew System::Windows::Forms::Label());
+                    this->btnCloseFavor = (gcnew System::Windows::Forms::Button());
+                    this->btnCloseFavorBG = (gcnew System::Windows::Forms::Button());
+                    this->favorList = (gcnew System::Windows::Forms::ListBox());
+                    this->btnRandWord = (gcnew System::Windows::Forms::Button());
                     this->panShowDef->SuspendLayout();
                     this->panAddNewkey->SuspendLayout();
-                    this->panEditDef->SuspendLayout();
                     this->panSwDataset->SuspendLayout();
                     this->menuPan->SuspendLayout();
                     this->suggestPan->SuspendLayout();
+                    this->panEditDef->SuspendLayout();
+                    this->panFavor->SuspendLayout();
                     this->SuspendLayout();
                     //
                     // btnSearch
@@ -386,11 +441,13 @@ namespace cs163dictionaryproject {
                     this->searchBox->Click += gcnew System::EventHandler(this, &mainFunction::searchBox_Click);
                     this->searchBox->MouseClick += gcnew System::Windows::Forms::MouseEventHandler(this, &mainFunction::searchBox_MouseClick);
                     this->searchBox->TextChanged += gcnew System::EventHandler(this, &mainFunction::searchBox_TextChanged);
+                    this->searchBox->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &mainFunction::searchBox_KeyDown);
                     this->searchBox->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &mainFunction::searchBox_MouseDown);
                     //
                     // panShowDef
                     //
                     this->panShowDef->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom));
+                    this->panShowDef->Controls->Add(this->btnAddedFavor);
                     this->panShowDef->Controls->Add(this->btnRemove);
                     this->panShowDef->Controls->Add(this->btnEdit);
                     this->panShowDef->Controls->Add(this->btnAddFavor);
@@ -401,6 +458,27 @@ namespace cs163dictionaryproject {
                     this->panShowDef->Name = L"panShowDef";
                     this->panShowDef->Size = System::Drawing::Size(886, 500);
                     this->panShowDef->TabIndex = 2;
+                    this->panShowDef->Visible = false;
+                    //
+                    // btnAddedFavor
+                    //
+                    this->btnAddedFavor->BackColor = System::Drawing::Color::Transparent;
+                    this->btnAddedFavor->BackgroundImage = (cli::safe_cast<System::Drawing::Image ^>(resources->GetObject(L"btnAddedFavor.BackgroundImage")));
+                    this->btnAddedFavor->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
+                    this->btnAddedFavor->FlatAppearance->BorderSize = 0;
+                    this->btnAddedFavor->FlatAppearance->MouseDownBackColor = System::Drawing::Color::Gray;
+                    this->btnAddedFavor->FlatAppearance->MouseOverBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(64)),
+                        static_cast<System::Int32>(static_cast<System::Byte>(64)), static_cast<System::Int32>(static_cast<System::Byte>(64)));
+                    this->btnAddedFavor->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+                    this->btnAddedFavor->ForeColor = System::Drawing::Color::Transparent;
+                    this->btnAddedFavor->Location = System::Drawing::Point(832, 26);
+                    this->btnAddedFavor->Margin = System::Windows::Forms::Padding(6, 7, 6, 7);
+                    this->btnAddedFavor->Name = L"btnAddedFavor";
+                    this->btnAddedFavor->Size = System::Drawing::Size(26, 26);
+                    this->btnAddedFavor->TabIndex = 5;
+                    this->btnAddedFavor->UseVisualStyleBackColor = false;
+                    this->btnAddedFavor->Visible = false;
+                    this->btnAddedFavor->Click += gcnew System::EventHandler(this, &mainFunction::btnAddFavor_Click);
                     //
                     // btnRemove
                     //
@@ -545,6 +623,7 @@ namespace cs163dictionaryproject {
                     this->btnViewFavor->TabIndex = 7;
                     this->btnViewFavor->Text = L"View favorite";
                     this->btnViewFavor->UseVisualStyleBackColor = true;
+                    this->btnViewFavor->Click += gcnew System::EventHandler(this, &mainFunction::btnViewFavor_Click);
                     //
                     // btnAddNewkey
                     //
@@ -578,6 +657,7 @@ namespace cs163dictionaryproject {
                     this->panAddNewkey->Name = L"panAddNewkey";
                     this->panAddNewkey->Size = System::Drawing::Size(894, 324);
                     this->panAddNewkey->TabIndex = 9;
+                    this->panAddNewkey->Visible = false;
                     //
                     // butAddCancel
                     //
@@ -689,47 +769,6 @@ namespace cs163dictionaryproject {
                     this->label2->Size = System::Drawing::Size(92, 30);
                     this->label2->TabIndex = 2;
                     this->label2->Text = L"Keyword";
-                    //
-                    // panEditDef
-                    //
-                    this->panEditDef->Controls->Add(this->btnConfirmEdit);
-                    this->panEditDef->Controls->Add(this->label4);
-                    this->panEditDef->Controls->Add(this->newDef);
-                    this->panEditDef->Location = System::Drawing::Point(3, 705);
-                    this->panEditDef->Margin = System::Windows::Forms::Padding(6, 7, 6, 7);
-                    this->panEditDef->Name = L"panEditDef";
-                    this->panEditDef->Size = System::Drawing::Size(1313, 474);
-                    this->panEditDef->TabIndex = 10;
-                    this->panEditDef->Visible = false;
-                    //
-                    // btnConfirmEdit
-                    //
-                    this->btnConfirmEdit->Location = System::Drawing::Point(485, 280);
-                    this->btnConfirmEdit->Margin = System::Windows::Forms::Padding(6, 7, 6, 7);
-                    this->btnConfirmEdit->Name = L"btnConfirmEdit";
-                    this->btnConfirmEdit->Size = System::Drawing::Size(176, 81);
-                    this->btnConfirmEdit->TabIndex = 4;
-                    this->btnConfirmEdit->Text = L"Change";
-                    this->btnConfirmEdit->UseVisualStyleBackColor = true;
-                    this->btnConfirmEdit->Click += gcnew System::EventHandler(this, &mainFunction::btnConfirmEdit_Click);
-                    //
-                    // label4
-                    //
-                    this->label4->AutoSize = true;
-                    this->label4->Location = System::Drawing::Point(193, 200);
-                    this->label4->Margin = System::Windows::Forms::Padding(6, 0, 6, 0);
-                    this->label4->Name = L"label4";
-                    this->label4->Size = System::Drawing::Size(139, 38);
-                    this->label4->TabIndex = 3;
-                    this->label4->Text = L"Definition";
-                    //
-                    // newDef
-                    //
-                    this->newDef->Location = System::Drawing::Point(391, 200);
-                    this->newDef->Margin = System::Windows::Forms::Padding(6, 7, 6, 7);
-                    this->newDef->Name = L"newDef";
-                    this->newDef->Size = System::Drawing::Size(616, 43);
-                    this->newDef->TabIndex = 1;
                     //
                     // panSwDataset
                     //
@@ -1023,6 +1062,195 @@ namespace cs163dictionaryproject {
                     this->btnCloseSuggestBox->MouseLeave += gcnew System::EventHandler(this, &mainFunction::btnCloseSuggest_MouseLeave);
                     this->btnCloseSuggestBox->MouseHover += gcnew System::EventHandler(this, &mainFunction::btnCloseSuggest_MouseEnter);
                     //
+                    // label4
+                    //
+                    this->label4->Anchor = System::Windows::Forms::AnchorStyles::Top;
+                    this->label4->AutoSize = true;
+                    this->label4->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12.5F));
+                    this->label4->ForeColor = System::Drawing::Color::White;
+                    this->label4->Location = System::Drawing::Point(53, 133);
+                    this->label4->Margin = System::Windows::Forms::Padding(6, 0, 6, 0);
+                    this->label4->Name = L"label4";
+                    this->label4->Size = System::Drawing::Size(152, 30);
+                    this->label4->TabIndex = 3;
+                    this->label4->Text = L"New Definition";
+                    //
+                    // btnConfirmEdit
+                    //
+                    this->btnConfirmEdit->Anchor = System::Windows::Forms::AnchorStyles::Top;
+                    this->btnConfirmEdit->BackColor = System::Drawing::Color::DodgerBlue;
+                    this->btnConfirmEdit->FlatAppearance->MouseDownBackColor = System::Drawing::Color::DarkCyan;
+                    this->btnConfirmEdit->FlatAppearance->MouseOverBackColor = System::Drawing::Color::DeepSkyBlue;
+                    this->btnConfirmEdit->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+                    this->btnConfirmEdit->Font = (gcnew System::Drawing::Font(L"Segoe UI", 10.5F, System::Drawing::FontStyle::Bold));
+                    this->btnConfirmEdit->ForeColor = System::Drawing::Color::White;
+                    this->btnConfirmEdit->Location = System::Drawing::Point(238, 214);
+                    this->btnConfirmEdit->Margin = System::Windows::Forms::Padding(6, 7, 6, 7);
+                    this->btnConfirmEdit->Name = L"btnConfirmEdit";
+                    this->btnConfirmEdit->Size = System::Drawing::Size(176, 46);
+                    this->btnConfirmEdit->TabIndex = 4;
+                    this->btnConfirmEdit->Text = L"Change";
+                    this->btnConfirmEdit->UseVisualStyleBackColor = false;
+                    this->btnConfirmEdit->Click += gcnew System::EventHandler(this, &mainFunction::btnConfirmEdit_Click);
+                    //
+                    // panEditDef
+                    //
+                    this->panEditDef->Controls->Add(this->btnNewDefCancel);
+                    this->panEditDef->Controls->Add(this->panel4);
+                    this->panEditDef->Controls->Add(this->newDef);
+                    this->panEditDef->Controls->Add(this->btnConfirmEdit);
+                    this->panEditDef->Controls->Add(this->label4);
+                    this->panEditDef->Location = System::Drawing::Point(44, 256);
+                    this->panEditDef->Margin = System::Windows::Forms::Padding(6, 7, 6, 7);
+                    this->panEditDef->Name = L"panEditDef";
+                    this->panEditDef->Size = System::Drawing::Size(899, 301);
+                    this->panEditDef->TabIndex = 10;
+                    this->panEditDef->Visible = false;
+                    //
+                    // btnNewDefCancel
+                    //
+                    this->btnNewDefCancel->Anchor = System::Windows::Forms::AnchorStyles::Top;
+                    this->btnNewDefCancel->FlatAppearance->MouseOverBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(64)),
+                        static_cast<System::Int32>(static_cast<System::Byte>(64)), static_cast<System::Int32>(static_cast<System::Byte>(64)));
+                    this->btnNewDefCancel->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+                    this->btnNewDefCancel->Font = (gcnew System::Drawing::Font(L"Segoe UI", 10.5F, System::Drawing::FontStyle::Bold));
+                    this->btnNewDefCancel->ForeColor = System::Drawing::SystemColors::Control;
+                    this->btnNewDefCancel->Location = System::Drawing::Point(484, 214);
+                    this->btnNewDefCancel->Margin = System::Windows::Forms::Padding(6, 7, 6, 7);
+                    this->btnNewDefCancel->Name = L"btnNewDefCancel";
+                    this->btnNewDefCancel->Size = System::Drawing::Size(176, 46);
+                    this->btnNewDefCancel->TabIndex = 36;
+                    this->btnNewDefCancel->Text = L"Cancel";
+                    this->btnNewDefCancel->UseVisualStyleBackColor = true;
+                    this->btnNewDefCancel->Click += gcnew System::EventHandler(this, &mainFunction::btnNewDefCancel_Click);
+                    //
+                    // panel4
+                    //
+                    this->panel4->Anchor = System::Windows::Forms::AnchorStyles::Top;
+                    this->panel4->BackColor = System::Drawing::Color::White;
+                    this->panel4->ForeColor = System::Drawing::Color::White;
+                    this->panel4->Location = System::Drawing::Point(217, 162);
+                    this->panel4->Name = L"panel4";
+                    this->panel4->Size = System::Drawing::Size(594, 1);
+                    this->panel4->TabIndex = 34;
+                    //
+                    // newDef
+                    //
+                    this->newDef->Anchor = System::Windows::Forms::AnchorStyles::Top;
+                    this->newDef->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(5)), static_cast<System::Int32>(static_cast<System::Byte>(5)),
+                        static_cast<System::Int32>(static_cast<System::Byte>(5)));
+                    this->newDef->BorderStyle = System::Windows::Forms::BorderStyle::None;
+                    this->newDef->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12.5F, System::Drawing::FontStyle::Bold));
+                    this->newDef->ForeColor = System::Drawing::SystemColors::Window;
+                    this->newDef->HideSelection = false;
+                    this->newDef->Location = System::Drawing::Point(217, 130);
+                    this->newDef->Margin = System::Windows::Forms::Padding(6, 7, 6, 7);
+                    this->newDef->Name = L"newDef";
+                    this->newDef->Size = System::Drawing::Size(594, 28);
+                    this->newDef->TabIndex = 33;
+                    //
+                    // panFavor
+                    //
+                    this->panFavor->Anchor = System::Windows::Forms::AnchorStyles::Top;
+                    this->panFavor->Controls->Add(this->label1);
+                    this->panFavor->Controls->Add(this->btnCloseFavor);
+                    this->panFavor->Controls->Add(this->btnCloseFavorBG);
+                    this->panFavor->Controls->Add(this->favorList);
+                    this->panFavor->Location = System::Drawing::Point(43, 141);
+                    this->panFavor->Name = L"panFavor";
+                    this->panFavor->Size = System::Drawing::Size(908, 528);
+                    this->panFavor->TabIndex = 35;
+                    this->panFavor->Visible = false;
+                    //
+                    // label1
+                    //
+                    this->label1->Anchor = System::Windows::Forms::AnchorStyles::Top;
+                    this->label1->AutoSize = true;
+                    this->label1->BackColor = System::Drawing::Color::Transparent;
+                    this->label1->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12.5F, System::Drawing::FontStyle::Bold));
+                    this->label1->ForeColor = System::Drawing::Color::White;
+                    this->label1->Location = System::Drawing::Point(2, 12);
+                    this->label1->Margin = System::Windows::Forms::Padding(6, 0, 6, 0);
+                    this->label1->Name = L"label1";
+                    this->label1->Size = System::Drawing::Size(141, 30);
+                    this->label1->TabIndex = 37;
+                    this->label1->Text = L"My Favourite";
+                    //
+                    // btnCloseFavor
+                    //
+                    this->btnCloseFavor->Anchor = System::Windows::Forms::AnchorStyles::Top;
+                    this->btnCloseFavor->BackColor = System::Drawing::Color::Transparent;
+                    this->btnCloseFavor->BackgroundImage = (cli::safe_cast<System::Drawing::Image ^>(resources->GetObject(L"btnCloseFavor.BackgroundImage")));
+                    this->btnCloseFavor->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+                    this->btnCloseFavor->FlatAppearance->BorderColor = System::Drawing::Color::Black;
+                    this->btnCloseFavor->FlatAppearance->BorderSize = 0;
+                    this->btnCloseFavor->FlatAppearance->MouseDownBackColor = System::Drawing::Color::Transparent;
+                    this->btnCloseFavor->FlatAppearance->MouseOverBackColor = System::Drawing::Color::Transparent;
+                    this->btnCloseFavor->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+                    this->btnCloseFavor->ForeColor = System::Drawing::Color::Transparent;
+                    this->btnCloseFavor->Location = System::Drawing::Point(863, 16);
+                    this->btnCloseFavor->Margin = System::Windows::Forms::Padding(3, 10, 10, 3);
+                    this->btnCloseFavor->Name = L"btnCloseFavor";
+                    this->btnCloseFavor->Size = System::Drawing::Size(16, 16);
+                    this->btnCloseFavor->TabIndex = 35;
+                    this->btnCloseFavor->UseMnemonic = false;
+                    this->btnCloseFavor->UseVisualStyleBackColor = false;
+                    this->btnCloseFavor->Click += gcnew System::EventHandler(this, &mainFunction::btnCloseFavorBG_Click);
+                    this->btnCloseFavor->MouseEnter += gcnew System::EventHandler(this, &mainFunction::btnCloseFavorBG_MouseEnter);
+                    this->btnCloseFavor->MouseLeave += gcnew System::EventHandler(this, &mainFunction::btnCloseFavorBG_MouseLeave);
+                    this->btnCloseFavor->MouseHover += gcnew System::EventHandler(this, &mainFunction::btnCloseFavorBG_MouseEnter);
+                    //
+                    // btnCloseFavorBG
+                    //
+                    this->btnCloseFavorBG->Anchor = System::Windows::Forms::AnchorStyles::Top;
+                    this->btnCloseFavorBG->BackColor = System::Drawing::Color::Transparent;
+                    this->btnCloseFavorBG->BackgroundImageLayout = System::Windows::Forms::ImageLayout::None;
+                    this->btnCloseFavorBG->FlatAppearance->BorderColor = System::Drawing::Color::White;
+                    this->btnCloseFavorBG->FlatAppearance->BorderSize = 0;
+                    this->btnCloseFavorBG->FlatAppearance->MouseOverBackColor = System::Drawing::Color::Transparent;
+                    this->btnCloseFavorBG->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+                    this->btnCloseFavorBG->ForeColor = System::Drawing::Color::Transparent;
+                    this->btnCloseFavorBG->Location = System::Drawing::Point(857, 9);
+                    this->btnCloseFavorBG->Name = L"btnCloseFavorBG";
+                    this->btnCloseFavorBG->Size = System::Drawing::Size(30, 30);
+                    this->btnCloseFavorBG->TabIndex = 36;
+                    this->btnCloseFavorBG->UseVisualStyleBackColor = false;
+                    this->btnCloseFavorBG->Click += gcnew System::EventHandler(this, &mainFunction::btnCloseFavorBG_Click);
+                    this->btnCloseFavorBG->MouseEnter += gcnew System::EventHandler(this, &mainFunction::btnCloseFavorBG_MouseEnter);
+                    this->btnCloseFavorBG->MouseLeave += gcnew System::EventHandler(this, &mainFunction::btnCloseFavorBG_MouseLeave);
+                    this->btnCloseFavorBG->MouseHover += gcnew System::EventHandler(this, &mainFunction::btnCloseFavorBG_MouseEnter);
+                    //
+                    // favorList
+                    //
+                    this->favorList->Anchor = System::Windows::Forms::AnchorStyles::Top;
+                    this->favorList->BackColor = System::Drawing::SystemColors::InfoText;
+                    this->favorList->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+                    this->favorList->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12.5F));
+                    this->favorList->ForeColor = System::Drawing::SystemColors::Info;
+                    this->favorList->FormattingEnabled = true;
+                    this->favorList->ItemHeight = 30;
+                    this->favorList->Location = System::Drawing::Point(7, 52);
+                    this->favorList->Name = L"favorList";
+                    this->favorList->Size = System::Drawing::Size(895, 452);
+                    this->favorList->TabIndex = 33;
+                    this->favorList->SelectedIndexChanged += gcnew System::EventHandler(this, &mainFunction::favorList_SelectedIndexChanged);
+                    //
+                    // btnRandWord
+                    //
+                    this->btnRandWord->Anchor = System::Windows::Forms::AnchorStyles::Top;
+                    this->btnRandWord->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+                    this->btnRandWord->Font = (gcnew System::Drawing::Font(L"Segoe UI", 10.5F, System::Drawing::FontStyle::Bold));
+                    this->btnRandWord->ForeColor = System::Drawing::Color::White;
+                    this->btnRandWord->ImageAlign = System::Drawing::ContentAlignment::TopCenter;
+                    this->btnRandWord->Location = System::Drawing::Point(458, 43);
+                    this->btnRandWord->Margin = System::Windows::Forms::Padding(6, 7, 6, 7);
+                    this->btnRandWord->Name = L"btnRandWord";
+                    this->btnRandWord->Size = System::Drawing::Size(189, 48);
+                    this->btnRandWord->TabIndex = 36;
+                    this->btnRandWord->Text = L"Random a Word";
+                    this->btnRandWord->UseVisualStyleBackColor = true;
+                    this->btnRandWord->Click += gcnew System::EventHandler(this, &mainFunction::btnRandWord_Click);
+                    //
                     // mainFunction
                     //
                     this->AutoScaleDimensions = System::Drawing::SizeF(15, 37);
@@ -1030,9 +1258,9 @@ namespace cs163dictionaryproject {
                     this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(5)), static_cast<System::Int32>(static_cast<System::Byte>(5)),
                         static_cast<System::Int32>(static_cast<System::Byte>(5)));
                     this->ClientSize = System::Drawing::Size(995, 682);
-                    this->Controls->Add(this->suggestPan);
+                    this->Controls->Add(this->btnRandWord);
                     this->Controls->Add(this->menuPan);
-                    this->Controls->Add(this->panShowDef);
+                    this->Controls->Add(this->suggestPan);
                     this->Controls->Add(this->panel2);
                     this->Controls->Add(this->btnShowFunc);
                     this->Controls->Add(this->btMinimise);
@@ -1042,10 +1270,12 @@ namespace cs163dictionaryproject {
                     this->Controls->Add(this->searchMode);
                     this->Controls->Add(this->searchBox);
                     this->Controls->Add(this->btnSearch);
-                    this->Controls->Add(this->panEditDef);
-                    this->Controls->Add(this->panSwDataset);
                     this->Controls->Add(this->btCloseBG);
                     this->Controls->Add(this->panAddNewkey);
+                    this->Controls->Add(this->panSwDataset);
+                    this->Controls->Add(this->panEditDef);
+                    this->Controls->Add(this->panFavor);
+                    this->Controls->Add(this->panShowDef);
                     this->Font = (gcnew System::Drawing::Font(L"Segoe UI", 16.2F));
                     this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
                     this->Margin = System::Windows::Forms::Padding(6, 7, 6, 7);
@@ -1057,11 +1287,13 @@ namespace cs163dictionaryproject {
                     this->panShowDef->PerformLayout();
                     this->panAddNewkey->ResumeLayout(false);
                     this->panAddNewkey->PerformLayout();
-                    this->panEditDef->ResumeLayout(false);
-                    this->panEditDef->PerformLayout();
                     this->panSwDataset->ResumeLayout(false);
                     this->menuPan->ResumeLayout(false);
                     this->suggestPan->ResumeLayout(false);
+                    this->panEditDef->ResumeLayout(false);
+                    this->panEditDef->PerformLayout();
+                    this->panFavor->ResumeLayout(false);
+                    this->panFavor->PerformLayout();
                     this->ResumeLayout(false);
                     this->PerformLayout();
                 }
@@ -1077,7 +1309,13 @@ namespace cs163dictionaryproject {
     }
 
 	private: System::Void btnAddFavor_Click(System::Object^ sender, System::EventArgs^ e) {
-		AddFavourite(fav, convertToString(searchBox->Text));
+            if (btnAddedFavor->Visible) {
+                fav = RemoveFavourite(fav, convertToString(searchBox->Text));
+                btnAddedFavor->Hide();
+            } else {
+                fav = AddFavourite(fav, convertToString(searchBox->Text));
+                btnAddedFavor->Show();
+            }
 	}
 	private: System::Void btnAddKeyword_Click(System::Object^ sender, System::EventArgs^ e) {
         AddKey(key, def, convertToString(inpKey->Text), convertToString(inpDef->Text));
@@ -1088,8 +1326,10 @@ namespace cs163dictionaryproject {
         {
             if (panEditDef->Visible)
                 panEditDef->Hide();
-            else
+            else {
+                newDef->Text = defLabel->Text;
                 panEditDef->Show();
+            }
         }
 
     private:
@@ -1107,34 +1347,43 @@ namespace cs163dictionaryproject {
                 System::Windows::Forms::DialogResult dialogResult
                     = MessageBox::Show("Missing Keyword or Definition!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
             }
-            AddKey(def, key, convertToString(inpKey->Text), convertToString(inpDef->Text));
+            AddKey(key, def, convertToString(inpKey->Text), convertToString(inpDef->Text));
             btnAddNewkey->PerformClick();
         }
 
     private:
         System::Void btnConfirmEdit_Click(System::Object ^ sender, System::EventArgs ^ e)
         {
-            if (newDef->Text == L"" || inpDef->Text == L"") {
+            if (newDef->Text == L"") {
                 System::Windows::Forms::DialogResult dialogResult
                     = MessageBox::Show("Missing definition!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
                 return;
             }
 
-            string keyword = search(key, convertToString(keyLabel->Text))->content;
-            editDefinition(def, key, search(key, keyword), convertToString(newDef->Text));
+            TrieNode* newD = search(key, convertToString(keyLabel->Text));
+            string keyword = newD->content;
+            editDefinition(def, key, newD, convertToString(newDef->Text));
             defLabel->Text = newDef->Text;
-            btnConfirmEdit->PerformClick();
+            panEditDef->Hide();
+            btnSearch->PerformClick();
         }
 
     private:
         System::Void btnSearch_Click(System::Object ^ sender, System::EventArgs ^ e)
         {
             TrieNode* result;
+            suggestPan->Hide();
             if (searchMode->Text == L"Input Keyword") {
                 cout << convertToString(searchBox->Text);
                 result = search(key, convertToString(searchBox->Text));
                 if (!result)
                     return;
+
+                if (search(fav, convertToString(searchBox->Text)))
+                    btnAddedFavor->Show();
+                else
+                    btnAddedFavor->Hide();
+
                 panShowDef->Show();
                 keyLabel->Text = searchBox->Text;
                 defLabel->Text = convertString(result->content);
@@ -1142,10 +1391,17 @@ namespace cs163dictionaryproject {
                 result = search(def, convertToString(searchBox->Text));
                 if (!result)
                     return;
+
+                if (search(fav, result->content))
+                    btnAddedFavor->Show();
+                else
+                    btnAddedFavor->Hide();
+
                 panShowDef->Show();
                 keyLabel->Text = convertString(result->content);
                 defLabel->Text = searchBox->Text;
             }
+            his = AdjustHistory(his, convertToString(keyLabel->Text));
         }
 
     private:
@@ -1156,8 +1412,10 @@ namespace cs163dictionaryproject {
                 return;
             }
             remove(key, convertToString(keyLabel->Text));
+            remove(def, convertToString(defLabel->Text));
             panShowDef->Hide();
             MessageBox::Show("Deleted " + keyLabel->Text + " succesfully!", "Status", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
+            searchBox->Text = L"";
         }
 
     private:
@@ -1334,6 +1592,8 @@ namespace cs163dictionaryproject {
     private:
         System::Void searchBox_KeyDown(System::Object ^ sender, System::Windows::Forms::KeyEventArgs ^ e)
         {
+            if (e->KeyValue == (int)Keys::Enter)
+                btnSearch->PerformClick();
         }
 
     private:
@@ -1355,7 +1615,11 @@ namespace cs163dictionaryproject {
                         cout << "1\n";
                         sug->Add(gcnew Suggestion(x));
                     } else {
-                        x = searchContinue(key, searchText[0]);
+                        if (searchMode->Text == L"Input Keyword") {
+                            x = searchContinue(key, searchText[0]);
+                        } else {
+                            x = searchContinue(def, searchText[0]);
+                        }
                         if (!x)
                             return;
                         cout << "2\n";
@@ -1370,11 +1634,14 @@ namespace cs163dictionaryproject {
                     } else {
                         cout << "none ";
                         sug->Clear();
-                        x = searchContinue(key, searchText[0]);
+                        if (searchMode->Text == L"Input Keyword") {
+                            x = searchContinue(key, searchText[0]);
+                        } else {
+                            x = searchContinue(def, searchText[0]);
+                        }
                         if (!x)
                             return;
-                        cout << "\n"
-                             << searchText[0] << " OK\n";
+                        cout << "\n" << searchText[0] << " OK\n";
                         sug->Add(gcnew Suggestion(x));
                         for (int i = 1; i < searchText.length(); i++) {
                             x = searchContinue(sug[i - 1]->node, searchText[i]);
@@ -1395,6 +1662,7 @@ namespace cs163dictionaryproject {
                     cur = cur->next;
                 }
             }
+            suggestPan->Show();
         }
 
     private:
@@ -1421,6 +1689,88 @@ namespace cs163dictionaryproject {
         System::Void searchBox_MouseClick(System::Object ^ sender, System::Windows::Forms::MouseEventArgs ^ e)
         {
             suggestPan->Show();
+        }
+
+    private:
+        System::Void btnNewDefCancel_Click(System::Object ^ sender, System::EventArgs ^ e)
+        {
+            panEditDef->Hide();
+        }
+
+    private:
+        Void updateFavorList(TrieNode* root, string& res, int x)
+        {
+            if (!root)
+                return;
+
+            if (root->isEndOfWord) {
+                favorList->Items->Add(convertString(res.substr(0, x)));
+            }
+            for (int i = 0; i < 128; i++) {
+                if (root->children[i]) {
+                    cout << (char)i << " ";
+                    if (x < res.length())
+                        res[x] = i;
+                    else
+                        res += i;
+
+                    updateFavorList(root->children[i], res, x + 1);
+                }
+            }
+        }
+
+    private:
+        System::Void btnViewFavor_Click(System::Object ^ sender, System::EventArgs ^ e)
+        {
+            if (panFavor->Visible) {
+                panFavor->Hide();
+            } else {
+                favorList->Items->Clear();
+                string res = "";
+                updateFavorList(fav, res, 0);
+                panFavor->Show();
+            }
+        }
+
+    private:
+        System::Void btnCloseFavorBG_Click(System::Object ^ sender, System::EventArgs ^ e)
+        {
+            panFavor->Hide();
+        }
+
+    private:
+        System::Void btnCloseFavorBG_MouseEnter(System::Object ^ sender, System::EventArgs ^ e)
+        {
+            btnCloseFavorBG->FlatAppearance->BorderSize = 1;
+        }
+
+    private:
+        System::Void btnCloseFavorBG_MouseLeave(System::Object ^ sender, System::EventArgs ^ e)
+        {
+            btnCloseFavorBG->FlatAppearance->BorderSize = 0;
+        }
+
+    private:
+        System::Void favorList_SelectedIndexChanged(System::Object ^ sender, System::EventArgs ^ e)
+        {
+            searchBox->Text = favorList->GetItemText(favorList->SelectedItem);
+            panFavor->Hide();
+            btnSearch->PerformClick();
+        }
+
+    private:
+        System::Void btnRandWord_Click(System::Object ^ sender, System::EventArgs ^ e)
+        {
+            string key1, def1;
+            int x = randomNum(wordNum);
+            randomWord(key, key1, def1, x);
+            if (searchMode->Text == L"Input Keyword") 
+                searchBox->Text = convertString(key1);
+            else
+                searchBox->Text = convertString(def1);
+            keyLabel->Text = convertString(key1);
+            defLabel->Text = convertString(def1);
+            panShowDef->Show();
         }
             };
             }

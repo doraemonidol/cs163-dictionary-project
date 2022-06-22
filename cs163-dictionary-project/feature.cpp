@@ -10,33 +10,45 @@ void editDefinition(TrieNode* def, TrieNode* key, TrieNode* node, string newDef)
     node->content = newDef;
 }
 
-bool AddFavourite(TrieNode* favouriteTrie, string& keyword)
+TrieNode* AddFavourite(TrieNode* favouriteTrie, string& keyword)
 {
-    return (insert(favouriteTrie, keyword, ""));
+    insert(favouriteTrie, keyword, "");
+    return favouriteTrie;
 }
 
-bool RemoveFavourite(TrieNode* favouriteTrie, string& keyword)
+TrieNode* RemoveFavourite(TrieNode* favouriteTrie, string& keyword)
 {
-    return (remove(favouriteTrie, keyword, 0));
+    remove(favouriteTrie, keyword, 0);
+    return favouriteTrie;
 }
 
-void AdjustHistory(HistoryNode*& root, string& keyword)
+HistoryNode* AdjustHistory(HistoryNode* root, string& keyword)
 {
     HistoryNode* add = new HistoryNode;
     add->word = keyword;
-    add->next = root->next;
+    if (root)
+        add->next = root;
     root = add;
-    HistoryNode* pCur = root;
+    HistoryNode* pCur = root, *pre = nullptr;
     int count = 1;
-    while (pCur->next) {
+    while (pCur && pCur->next) {
         count++;
-        if (count > 10) {
+        if (pCur->next->word == keyword) {
+            pre = pCur->next->next;
+            delete pCur->next;
+            pCur->next = pre;
+            count--;
+        }
+        if (count > MAX_HISTORY) {
             delete pCur->next;
             pCur->next = nullptr;
             break;
         }
+        pre = pCur;
         pCur = pCur->next;
     }
+    cout << count << "hist\n";
+    return root;
 }
 
 //level = 0, num = 0
