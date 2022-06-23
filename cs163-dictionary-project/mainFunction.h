@@ -222,20 +222,15 @@ namespace cs163dictionaryproject {
 			//TODO: Add the constructor code here
 			//
 		}
-		void getData(TrieNode* inDef, TrieNode* inKey, TrieNode* inFav, HistoryNode * inHist, int wordCount)  {
+                void getData(TrieNode* inDef, TrieNode* inKey, TrieNode* inFav, HistoryNode* inHist, int wordCount, string cur)
+                {
             def = inDef;
             key = inKey;
             fav = inFav;
             his = inHist;
             wordNum = wordCount;
-		}
-        void getDataSet(string cur) {
-            dataSetOpt->Items->Clear();
-            for (string c : datasetName) {
-                dataSetOpt->Items->Add(gcnew String(convertString(c)));
-            }
             curDataset = convertString(cur);
-        }
+		}
 
 	protected:
 		/// <summary>
@@ -816,6 +811,7 @@ namespace cs163dictionaryproject {
                     this->btnConfSwData->TabIndex = 36;
                     this->btnConfSwData->Text = L"Switch";
                     this->btnConfSwData->UseVisualStyleBackColor = false;
+                    this->btnConfSwData->Click += gcnew System::EventHandler(this, &mainFunction::btnConfSwData_Click);
                     //
                     // dataSetOpt
                     //
@@ -1260,7 +1256,6 @@ namespace cs163dictionaryproject {
                     this->ClientSize = System::Drawing::Size(995, 682);
                     this->Controls->Add(this->btnRandWord);
                     this->Controls->Add(this->menuPan);
-                    this->Controls->Add(this->suggestPan);
                     this->Controls->Add(this->panel2);
                     this->Controls->Add(this->btnShowFunc);
                     this->Controls->Add(this->btMinimise);
@@ -1271,11 +1266,12 @@ namespace cs163dictionaryproject {
                     this->Controls->Add(this->searchBox);
                     this->Controls->Add(this->btnSearch);
                     this->Controls->Add(this->btCloseBG);
-                    this->Controls->Add(this->panAddNewkey);
                     this->Controls->Add(this->panSwDataset);
+                    this->Controls->Add(this->panShowDef);
                     this->Controls->Add(this->panEditDef);
                     this->Controls->Add(this->panFavor);
-                    this->Controls->Add(this->panShowDef);
+                    this->Controls->Add(this->suggestPan);
+                    this->Controls->Add(this->panAddNewkey);
                     this->Font = (gcnew System::Drawing::Font(L"Segoe UI", 16.2F));
                     this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
                     this->Margin = System::Windows::Forms::Padding(6, 7, 6, 7);
@@ -1441,6 +1437,7 @@ namespace cs163dictionaryproject {
                 panSwDataset->Hide();
             else {
                 dataSetOpt->Text = curDataset;
+                
                 panSwDataset->Show();
             }
         }
@@ -1451,6 +1448,7 @@ namespace cs163dictionaryproject {
             if (dataSetOpt->Text != curDataset) {
                 curDataset = dataSetOpt->Text;
                 int a;
+                cout << convertToString(curDataset);
                 FullDictTree dictTree = ChooseDataSet(key, def, convertToString(curDataset), a);
                 wordNum = a;
                 key = dictTree.key;
@@ -1587,6 +1585,10 @@ namespace cs163dictionaryproject {
         System::Void mainFunction_Load(System::Object ^ sender, System::EventArgs ^ e)
         {
             sug = gcnew List<Suggestion ^>();
+          /*  dataSetOpt->Items->Clear();
+            for (string c : DATASET_NAME) {
+                dataSetOpt->Items->Add(gcnew String(convertString(c)));
+            }*/
         }
 
     private:

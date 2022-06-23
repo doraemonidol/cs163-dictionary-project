@@ -11,14 +11,14 @@ void main() {
     TrieNode* fav = 0, * key = 0, * def = 0;
     HistoryNode* his = 0;
     int wordCount;
-    string curDataset;
+    string curDataset = "slang.txt";
     ShowWindow(GetConsoleWindow(), SW_SHOW);
     InitializeTrie(key, def, "slang.txt", wordCount);
 
     Application::EnableVisualStyles();
     Application::SetCompatibleTextRenderingDefault(false);
     cs163dictionaryproject::mainFunction form;
-    form.getData(def, key, fav, his, wordCount);
+    form.getData(def, key, fav, his, wordCount, curDataset);
     Application::Run(% form);
 
     RemoveAll(key);

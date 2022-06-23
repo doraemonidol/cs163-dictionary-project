@@ -22,7 +22,7 @@ using namespace System;
 using namespace System::Windows::Forms;
 #pragma warning(disable : 4996)
 
-const vector<string> datasetName = { "slang.txt", "emotional.txt", "EngToEng.txt", "EngToViet.txt", "VietToEng.txt" };
+const vector<string> DATASET_NAME = { "slang.txt", "emotional.txt", "EngToEng.txt", "EngToViet.txt", "VietToEng.txt" };
 const int SUGGEST_LIST = 20;
 const int REQUIRED_CHAR_NUM = 2;
 const int MAX_HISTORY = 20;

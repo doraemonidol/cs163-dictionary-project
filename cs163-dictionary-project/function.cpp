@@ -208,9 +208,9 @@ void inputData(string& curDatset) {
     } else {
         f.close();
         ofstream o("./dataset/fantastic4.txt");
-        o << datasetName[0] << endl;
+        o << DATASET_NAME[0] << endl;
         o.close();
-        curDatset = datasetName[0];
+        curDatset = DATASET_NAME[0];
     }
 }
 
