@@ -1,5 +1,7 @@
 #pragma once	
 
+System::String ^ convertString(string st);
+
 TrieNode* getNode();
 bool insert(TrieNode*& root, string key, string content);
 TrieNode* search(TrieNode* root, string key);
@@ -18,5 +20,10 @@ void randomWord(TrieNode* root, string& key, string& def, int n);
 TrieNode* traverse(TrieNode* root, string& res, int &n, int x);
 int randomNum(int n);
 
-void FileToTrie(ifstream& f, TrieNode*& trie);
+void inputHistory(ifstream& in, HistoryNode*& his);
+void outputHistory(ofstream& out, HistoryNode*& his);
+void inputData(TrieNode*& key, TrieNode*& def, string& curDatset, TrieNode*& fav, HistoryNode*& his, int& wordCount);
+void unloadData(TrieNode* key, TrieNode* def, string curDatset, TrieNode* fav, HistoryNode* his);
+
+void FileToTrie(ifstream& f, TrieNode*& trie, int& wordCount);
 void TrieToFile(ofstream& f, TrieNode*& trie);

@@ -11,7 +11,7 @@ void randomWord(TrieNode* root, string& key, string& def, int n)
 
 TrieNode* traverse(TrieNode* root, string& res, int &n, int x)
 {
-    cout << n << " " << x << " " << res << endl;
+    //cout << n << " " << x << " " << res << endl;
     if (!root)
         return nullptr;
     if (n == 1 && root->isEndOfWord) {

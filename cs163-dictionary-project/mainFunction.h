@@ -23,7 +23,7 @@ namespace cs163dictionaryproject {
                 TrieNode *def, *key, *fav;//, **sug;
                 HistoryNode* his;
                 int wordNum, nSug = 0;
-                String ^ curDataset = L"", ^preSearch = L"";
+                String ^ curDataset = L"", ^ preSearch = L"";
                 bool Exit1 = false;
                 List<Suggestion ^> ^ sug;
           
@@ -222,15 +222,16 @@ namespace cs163dictionaryproject {
 			//TODO: Add the constructor code here
 			//
 		}
-                void getData(TrieNode* inDef, TrieNode* inKey, TrieNode* inFav, HistoryNode* inHist, int wordCount, string cur)
-                {
+        mainFunction(TrieNode* inDef, TrieNode* inKey, TrieNode* inFav, HistoryNode* inHist, int wordCount, String ^ cur)
+        {
+            InitializeComponent();
             def = inDef;
             key = inKey;
             fav = inFav;
             his = inHist;
             wordNum = wordCount;
-            curDataset = convertString(cur);
-		}
+            curDataset = cur;
+        }
 
 	protected:
 		/// <summary>
@@ -1267,17 +1268,18 @@ namespace cs163dictionaryproject {
                     this->Controls->Add(this->btnSearch);
                     this->Controls->Add(this->btCloseBG);
                     this->Controls->Add(this->panSwDataset);
-                    this->Controls->Add(this->panShowDef);
                     this->Controls->Add(this->panEditDef);
-                    this->Controls->Add(this->panFavor);
                     this->Controls->Add(this->suggestPan);
                     this->Controls->Add(this->panAddNewkey);
+                    this->Controls->Add(this->panShowDef);
+                    this->Controls->Add(this->panFavor);
                     this->Font = (gcnew System::Drawing::Font(L"Segoe UI", 16.2F));
                     this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
                     this->Margin = System::Windows::Forms::Padding(6, 7, 6, 7);
                     this->Name = L"mainFunction";
                     this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
                     this->Text = L"Fantastic Dictionary";
+                    this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &mainFunction::mainFunction_FormClosing);
                     this->Load += gcnew System::EventHandler(this, &mainFunction::mainFunction_Load);
                     this->panShowDef->ResumeLayout(false);
                     this->panShowDef->PerformLayout();
@@ -1466,11 +1468,13 @@ namespace cs163dictionaryproject {
                 return;
             }
             int a;
-            FullDictTree dictTree = ChooseDataSet(key, def, convertToString(curDataset),a);
+            FullDictTree dictTree = ChooseDataSet(key, def, convertToString(curDataset), a);
             wordNum = a;
             key = dictTree.key;
             def = dictTree.def;
             MessageBox::Show("Dataset " + curDataset + " loaded!", "Status", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
+            searchBox->Text = L"";
+            panShowDef->Hide();
         }
 
     private:
@@ -1585,10 +1589,10 @@ namespace cs163dictionaryproject {
         System::Void mainFunction_Load(System::Object ^ sender, System::EventArgs ^ e)
         {
             sug = gcnew List<Suggestion ^>();
-          /*  dataSetOpt->Items->Clear();
+            dataSetOpt->Items->Clear();
             for (string c : DATASET_NAME) {
                 dataSetOpt->Items->Add(gcnew String(convertString(c)));
-            }*/
+            }
         }
 
     private:
@@ -1677,8 +1681,8 @@ namespace cs163dictionaryproject {
         System::Void suggestList_SelectedIndexChanged(System::Object ^ sender, System::EventArgs ^ e)
         {
             searchBox->Text = suggestList->GetItemText(suggestList->SelectedItem);
-            suggestPan->Hide();
             btnSearch->PerformClick();
+            suggestPan->Hide();
         }
 
     private:
@@ -1773,6 +1777,12 @@ namespace cs163dictionaryproject {
             keyLabel->Text = convertString(key1);
             defLabel->Text = convertString(def1);
             panShowDef->Show();
+        }
+
+    private:
+        System::Void mainFunction_FormClosing(System::Object ^ sender, System::Windows::Forms::FormClosingEventArgs ^ e)
+        {
+            unloadData(key, def, convertToString(curDataset), fav, his);
         }
             };
             }

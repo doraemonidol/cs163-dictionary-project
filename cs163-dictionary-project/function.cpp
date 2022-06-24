@@ -3,6 +3,10 @@
 #include "function.h"
 #include "mainFunction.h"
 
+System::String ^ convertString(string st) {
+    return gcnew System::String(st.c_str());
+};
+
 TrieNode* getNode() {
 	TrieNode* pNode = new TrieNode;
 	pNode->isEndOfWord = false;
@@ -119,6 +123,7 @@ bool isLeafNode(TrieNode* root)
 void InitializeTrie(TrieNode*& key, TrieNode *& def, string path, int &wordcount)
 {
     ifstream f("./dataset/" + path);
+    wordcount = 0;
     bool checkEndofWord;
     string str, Word, Content;
     char check;
@@ -157,8 +162,10 @@ void RemoveAll(TrieNode*& root)
     if (!root)
         return;
     for (int i = 0; i < 128; i++)
-        if (root->children[i])
+        if (root->children[i]) {
             RemoveAll(root->children[i]);
+            root->children[i] = nullptr;
+        }
     delete root;
     root = nullptr;
 }
@@ -169,7 +176,6 @@ FullDictTree ChooseDataSet(TrieNode* key, TrieNode* def, string datasetName, int
     RemoveAll(key);
     RemoveAll(def);
     InitializeTrie(key, def, datasetName, wordcount);
-    // WRITE TRIE TO FILE here <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     FullDictTree dict;
     dict.key = key;
     dict.def = def;
@@ -199,23 +205,84 @@ bool TrieOption()
     return true;
 }
 
-void inputData(string& curDatset) {
+void inputHistory(ifstream& in, HistoryNode*& his) {
+    string s;
+    while (getline(in, s)) {
+        HistoryNode* cur = new HistoryNode;
+        cur->word = s;
+        cur->next = his;
+        his = cur;
+    }
+}
+void outputHistory(ofstream& out, HistoryNode*& his) {
+    while (his) {
+        HistoryNode* cur = his->next;
+        out << his->word;
+        delete his;
+        his = cur;
+    }
+}
+
+void inputData(TrieNode*& key, TrieNode*& def, string& curDatset, TrieNode*& fav, HistoryNode*& his, int& wordCount)
+{
+    key = def = fav = nullptr;
+    his = nullptr;
     ifstream f("./dataset/fantastic4.txt");
+    int tmp = 0;
     if (f.is_open()) {
         getline(f, curDatset);
-        // INPUT TRIE FROM FILE here <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+        ifstream in("./dataset/favTrie.txt");
+        if (in.is_open())
+            FileToTrie(in, fav, tmp);
+        in.close();
+
+        in.open("./dataset/history.txt");
+        if (in.is_open()) {
+            inputHistory(in, his);
+        }
+        in.close();
+
+        in.open("./dataset/keyTrie.txt");
+        if (in.is_open())
+            FileToTrie(in, key, wordCount);
+        else {
+            FullDictTree dict = ChooseDataSet(key, def, curDatset, wordCount);
+            key = dict.key;
+            def = dict.def;
+            in.close();
+            return;
+        }
+        in.close();
+
+        in.open("./dataset/defTrie.txt");
+        if (in.is_open())
+            FileToTrie(in, def, tmp);
+        else {
+            FullDictTree dict = ChooseDataSet(key, def, curDatset, wordCount);
+            key = dict.key;
+            def = dict.def;
+            in.close();
+            return;
+        }
+        in.close();
+
         f.close();
     } else {
         f.close();
         ofstream o("./dataset/fantastic4.txt");
         o << DATASET_NAME[0] << endl;
         o.close();
+
+        InitializeTrie(key, def, DATASET_NAME[0], wordCount);
+
         curDatset = DATASET_NAME[0];
     }
 }
 
-void FileToTrie(ifstream& f, TrieNode*& trie) {
+void FileToTrie(ifstream& f, TrieNode*& trie, int &wordCount) {
     string s;
+    wordCount = 0;
     trie = getNode();
     TrieNode* pCur;
     stack<TrieNode*> st;
@@ -234,8 +301,44 @@ void FileToTrie(ifstream& f, TrieNode*& trie) {
                 pCur = pCur->children[c];
             }
         }
+        getline(f, s);
+        pCur->content = s;
         pCur->isEndOfWord = true;
+        wordCount++;
     }
+}
+
+void unloadData(TrieNode* key, TrieNode* def, string curDatset, TrieNode* fav, HistoryNode* his)
+{
+    ofstream o;
+    o.open("./dataset/fantastic4.txt");
+    o << curDatset << endl;
+    o.close();
+
+    o.open("./dataset/keyTrie.txt");
+    if (o.is_open())
+        TrieToFile(o, key);
+    o.close();
+
+    o.open("./dataset/defTrie.txt");
+    if (o.is_open())
+        TrieToFile(o, def);
+    o.close();
+
+    o.open("./dataset/favTrie.txt");
+    if (o.is_open())
+        TrieToFile(o, fav);
+    o.close();
+
+    o.open("./dataset/history.txt");
+    if (o.is_open()) {
+        outputHistory(o, his);
+    }
+    o.close();
+
+    RemoveAll(key);
+    RemoveAll(def);
+    RemoveAll(fav);
 }
 
 void TrieToFile(ofstream& f, TrieNode*& trie) {
