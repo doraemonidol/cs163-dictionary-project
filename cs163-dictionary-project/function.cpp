@@ -281,31 +281,20 @@ void inputData(TrieNode*& key, TrieNode*& def, string& curDatset, TrieNode*& fav
 }
 
 void FileToTrie(ifstream& f, TrieNode*& trie, int &wordCount) {
-    string s;
-    wordCount = 0;
     trie = getNode();
-    TrieNode* pCur;
-    stack<TrieNode*> st;
-    while (getline(f, s)) {
-        pCur = trie;
-        st = stack<TrieNode*>();
-        for (char c : s) {
-            if (c == 9) {//tab character
-                pCur = st.top();
-                st.pop();
-            }
-            else {
-                pCur->children[c] = getNode();
-                pCur->childcount++;
-                st.push(pCur);
-                pCur = pCur->children[c];
-            }
-        }
-        getline(f, s);
-        pCur->content = s;
-        pCur->isEndOfWord = true;
+    char c;
+    f.get(c);
+    if (c == '\n') {
+        trie->isEndOfWord = true;
         wordCount++;
+        string ct;
+        getline(f, ct);
+        trie->content = ct;
+        f.get(c);
     }
+    if (c == 9) return;
+    trie->childcount++;
+    FileToTrie(f, trie->children[c], wordCount);
 }
 
 void unloadData(TrieNode* key, TrieNode* def, string curDatset, TrieNode* fav, HistoryNode* his)
@@ -342,5 +331,16 @@ void unloadData(TrieNode* key, TrieNode* def, string curDatset, TrieNode* fav, H
 }
 
 void TrieToFile(ofstream& f, TrieNode*& trie) {
-
+    for (char c = 0; c < 128; c++) {
+        if (trie->children[c]) {
+            f << c;
+            TrieToFile(f, trie->children[c]);
+            char tab = 9;
+            f << tab;
+        }
+    }
+    if (trie->isEndOfWord) {
+        f << '\n';
+        f << trie->content << '\n';
+    }
 }
