@@ -14,7 +14,6 @@ bool isLeafNode(TrieNode* root);
 void InitializeTrie(TrieNode*& key, TrieNode*& def, string path, int& wordcount);
 void RemoveAll(TrieNode*& root);
 FullDictTree ChooseDataSet(TrieNode* key, TrieNode* def, string datasetName, int& wordcount);
-bool TrieOption();
 
 void randomWord(TrieNode* root, string& key, string& def, int n);
 TrieNode* traverse(TrieNode* root, string& res, int &n, int x);
@@ -26,4 +25,4 @@ void inputData(TrieNode*& key, TrieNode*& def, string& curDatset, TrieNode*& fav
 void unloadData(TrieNode* key, TrieNode* def, string curDatset, TrieNode* fav, HistoryNode* his);
 
 void FileToTrie(ifstream& f, TrieNode*& trie, int& wordCount);
-void TrieToFile(ofstream& f, TrieNode*& trie);
+void TrieToFile(ofstream& f, TrieNode* trie);

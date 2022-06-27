@@ -2822,7 +2822,7 @@ HIV`Human Immunodeficiency Virus
 HIWTH`Hate It When That Happens
 HIYA`Hello
 HJNTIY`He's Just Not That Into You
- HK`Hong Kong| Hostile Kids
+HK`Hong Kong| Hostile Kids
 HL`Half Life (game)
 HLAS`Hook, Line And Sinker
 HLV`Hasta La Vista

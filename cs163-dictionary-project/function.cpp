@@ -122,6 +122,7 @@ bool isLeafNode(TrieNode* root)
 
 void InitializeTrie(TrieNode*& key, TrieNode *& def, string path, int &wordcount)
 {
+    //cin.get();
     ifstream f("./dataset/" + path);
     wordcount = 0;
     bool checkEndofWord;
@@ -149,9 +150,10 @@ void InitializeTrie(TrieNode*& key, TrieNode *& def, string path, int &wordcount
                 Content += str[i];
             }
         }
+
+        //cout << Word << " " << Content << endl;
         insert(key, Word, Content);
         insert(def, Content, Word);
-        //cout << Word << " " << Content << endl;
         wordcount++;
     }
     f.close();
@@ -172,37 +174,18 @@ void RemoveAll(TrieNode*& root)
 
 FullDictTree ChooseDataSet(TrieNode* key, TrieNode* def, string datasetName, int &wordcount)
 {
-    ofstream f("./dataset/fanstatic4.txt");
     RemoveAll(key);
     RemoveAll(def);
+    key = nullptr;
+    def = nullptr;
     InitializeTrie(key, def, datasetName, wordcount);
     FullDictTree dict;
     dict.key = key;
     dict.def = def;
+    ofstream f(DATA_DIR + "fantastic4.txt");
     f << datasetName << endl;
     f.close();
     return dict;
-}
-
-bool TrieOption()
-{
-    fstream f;
-    f.open("./dataset/trie.txt");
-    if (f.is_open()) {
-        // READ IN BUILT-TRIE HERE
-        f.close();
-    } else {
-        return false;
-    }
-    /*
-        f.close();
-        InitializeTrie(root, "trie.txt");
-        if (choose != 0) { //switch data set
-            RemoveAll(root);
-            ChooseDataSet(root, choose);
-        }
-    */
-    return true;
 }
 
 void inputHistory(ifstream& in, HistoryNode*& his) {
@@ -217,7 +200,7 @@ void inputHistory(ifstream& in, HistoryNode*& his) {
 void outputHistory(ofstream& out, HistoryNode*& his) {
     while (his) {
         HistoryNode* cur = his->next;
-        out << his->word;
+        out << his->word << endl;
         delete his;
         his = cur;
     }
@@ -227,23 +210,26 @@ void inputData(TrieNode*& key, TrieNode*& def, string& curDatset, TrieNode*& fav
 {
     key = def = fav = nullptr;
     his = nullptr;
-    ifstream f("./dataset/fantastic4.txt");
+    ifstream f(DATA_DIR + "fantastic4.txt");
     int tmp = 0;
     if (f.is_open()) {
+        cout << "fantastic4 loaded\n";
         getline(f, curDatset);
 
-        ifstream in("./dataset/favTrie.txt");
+        ifstream in(DATA_DIR + "favTrie.txt");
         if (in.is_open())
             FileToTrie(in, fav, tmp);
+        cout << "favTrie loaded\n";
         in.close();
 
-        in.open("./dataset/history.txt");
+        in.open(DATA_DIR + "history.txt");
         if (in.is_open()) {
             inputHistory(in, his);
         }
         in.close();
+        cout << "history loaded\n";
 
-        in.open("./dataset/keyTrie.txt");
+        in.open(DATA_DIR + "keyTrie.txt");
         if (in.is_open())
             FileToTrie(in, key, wordCount);
         else {
@@ -254,8 +240,9 @@ void inputData(TrieNode*& key, TrieNode*& def, string& curDatset, TrieNode*& fav
             return;
         }
         in.close();
+        cout << "keyTrie loaded\n";
 
-        in.open("./dataset/defTrie.txt");
+        in.open(DATA_DIR + "defTrie.txt");
         if (in.is_open())
             FileToTrie(in, def, tmp);
         else {
@@ -266,11 +253,12 @@ void inputData(TrieNode*& key, TrieNode*& def, string& curDatset, TrieNode*& fav
             return;
         }
         in.close();
+        cout << "defTrie loaded\n";
 
         f.close();
     } else {
         f.close();
-        ofstream o("./dataset/fantastic4.txt");
+        ofstream o(DATA_DIR + "fantastic4.txt");
         o << DATASET_NAME[0] << endl;
         o.close();
 
@@ -280,8 +268,41 @@ void inputData(TrieNode*& key, TrieNode*& def, string& curDatset, TrieNode*& fav
     }
 }
 
-void FileToTrie(ifstream& f, TrieNode*& trie, int &wordCount) {
-    if (f.eof()) return;
+//void FileToTrie(ifstream& f, TrieNode*& trie, int &wordCount) {
+//    if (f.eof()) return;
+//    string s;
+//    wordCount = 0;
+//    trie = getNode();
+//    TrieNode* pCur;
+//    stack<TrieNode*> st;
+//    st = stack<TrieNode*>();
+//    st.push(trie);
+//    while (getline(f, s)) {
+//        pCur = trie;
+//        //cout << s << " " << wordCount << endl;
+//        for (char c : s) {
+//            if (c == 9) { //tab character
+//                //cout << st.size() << "<<\n";
+//                pCur = st.top();
+//                st.pop();
+//            } else {
+//                //cout << st.size() << "<<\n";
+//                pCur->children[c] = getNode();
+//                pCur->childcount++;
+//                st.push(pCur);
+//                pCur = pCur->children[c];
+//            }
+//        }
+//        getline(f, s);
+//        pCur->content = s;
+//        pCur->isEndOfWord = true;
+//        wordCount++;
+//    }
+//}
+void FileToTrie(ifstream& f, TrieNode*& trie, int& wordCount)
+{
+    if (f.eof())
+        return;
     trie = getNode();
     char c;
     f.get(c);
@@ -290,10 +311,12 @@ void FileToTrie(ifstream& f, TrieNode*& trie, int &wordCount) {
         wordCount++;
         string ct;
         getline(f, ct);
+        cout << ct << endl;
         trie->content = ct;
         f.get(c);
     }
-    if (c == 9) return;
+    if (c == 9)
+        return;
     trie->childcount++;
     FileToTrie(f, trie->children[c], wordCount);
 }
@@ -301,26 +324,27 @@ void FileToTrie(ifstream& f, TrieNode*& trie, int &wordCount) {
 void unloadData(TrieNode* key, TrieNode* def, string curDatset, TrieNode* fav, HistoryNode* his)
 {
     ofstream o;
-    o.open("./dataset/fantastic4.txt");
+    o.open(DATA_DIR + "fantastic4.txt");
+    cout << curDatset << endl;
     o << curDatset << endl;
     o.close();
 
-    o.open("./dataset/keyTrie.txt");
+    o.open(DATA_DIR + "keyTrie.txt");
     if (o.is_open())
         TrieToFile(o, key);
     o.close();
 
-    o.open("./dataset/defTrie.txt");
+    o.open(DATA_DIR + "defTrie.txt");
     if (o.is_open())
         TrieToFile(o, def);
     o.close();
 
-    o.open("./dataset/favTrie.txt");
+    o.open(DATA_DIR + "favTrie.txt");
     if (o.is_open())
         TrieToFile(o, fav);
     o.close();
 
-    o.open("./dataset/history.txt");
+    o.open(DATA_DIR + "history.txt");
     if (o.is_open()) {
         outputHistory(o, his);
     }
@@ -331,10 +355,12 @@ void unloadData(TrieNode* key, TrieNode* def, string curDatset, TrieNode* fav, H
     RemoveAll(fav);
 }
 
-void TrieToFile(ofstream& f, TrieNode*& trie) {
-    for (char c = 0; c < 128; c++) {
+void TrieToFile(ofstream& f, TrieNode* trie) {
+    if (!trie)
+        return;
+    for (int c = 0; c < 128; c++) {
         if (trie->children[c]) {
-            f << c;
+            f << (char)c;
             TrieToFile(f, trie->children[c]);
             char tab = 9;
             f << tab;

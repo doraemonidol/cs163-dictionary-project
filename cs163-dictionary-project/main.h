@@ -26,6 +26,7 @@ const vector<string> DATASET_NAME = { "slang.txt", "emotional.txt", "EngToEng.tx
 const int SUGGEST_LIST = 20;
 const int REQUIRED_CHAR_NUM = 2;
 const int MAX_HISTORY = 20;
+const string DATA_DIR = "./data/";
 
 struct TrieNode {
     TrieNode* children[128]; //26
