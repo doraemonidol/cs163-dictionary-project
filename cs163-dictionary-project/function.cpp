@@ -281,6 +281,7 @@ void inputData(TrieNode*& key, TrieNode*& def, string& curDatset, TrieNode*& fav
 }
 
 void FileToTrie(ifstream& f, TrieNode*& trie, int &wordCount) {
+    if (f.eof()) return;
     trie = getNode();
     char c;
     f.get(c);
