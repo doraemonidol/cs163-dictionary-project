@@ -299,26 +299,30 @@ void inputData(TrieNode*& key, TrieNode*& def, string& curDatset, TrieNode*& fav
 //        wordCount++;
 //    }
 //}
-void FileToTrie(ifstream& f, TrieNode*& trie, int& wordCount)
+void RecursiveFileToTrie(ifstream& f, TrieNode* trie, int& wordCount) 
 {
-    if (f.eof())
-        return;
-    trie = getNode();
     char c;
-    f.get(c);
-    if (c == '\n') {
-        trie->isEndOfWord = true;
-        wordCount++;
-        string ct;
-        getline(f, ct);
-        cout << ct << endl;
-        trie->content = ct;
-        f.get(c);
+    while (f.get(c)) {
+        if (c == '\n') {
+            trie->isEndOfWord = true;
+            wordCount++;
+            string ct;
+            getline(f, ct);
+            trie->content = ct;
+            f.get(c);
+        }
+        if (c == 9) {
+            return;
+        }
+        trie->childcount++;
+        trie->children[c] = getNode();
+        RecursiveFileToTrie(f, trie->children[c], wordCount);
     }
-    if (c == 9)
-        return;
-    trie->childcount++;
-    FileToTrie(f, trie->children[c], wordCount);
+}
+void FileToTrie(ifstream& f, TrieNode*& trie, int& wordCount) 
+{
+    trie = getNode();
+    RecursiveFileToTrie(f, trie, wordCount);
 }
 
 void unloadData(TrieNode* key, TrieNode* def, string curDatset, TrieNode* fav, HistoryNode* his)

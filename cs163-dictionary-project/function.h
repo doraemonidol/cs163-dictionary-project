@@ -24,5 +24,6 @@ void outputHistory(ofstream& out, HistoryNode*& his);
 void inputData(TrieNode*& key, TrieNode*& def, string& curDatset, TrieNode*& fav, HistoryNode*& his, int& wordCount);
 void unloadData(TrieNode* key, TrieNode* def, string curDatset, TrieNode* fav, HistoryNode* his);
 
+void RecursiveFileToTrie(ifstream& f, TrieNode* trie, int& wordCount);
 void FileToTrie(ifstream& f, TrieNode*& trie, int& wordCount);
 void TrieToFile(ofstream& f, TrieNode* trie);
