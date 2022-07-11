@@ -309,7 +309,7 @@ void RecursiveFileToTrie(ifstream& f, TrieNode* trie, int& wordCount)
             string ct;
             getline(f, ct);
             trie->content = ct;
-            f.get(c);
+            if (!f.get(c)) break;
         }
         if (c == 9) {
             return;
