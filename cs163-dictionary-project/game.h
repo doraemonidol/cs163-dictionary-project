@@ -18,26 +18,26 @@ using namespace System::Collections::Generic;
 /// </summary>
 public
 ref class game : public System::Windows::Forms::Form {
-    private:
-        TrieNode *key0;
-        int wordNum1;
-        String ^ gameAns = L"";
+private:
+    TrieNode* key0;
+    int wordNum1;
+    String ^ gameAns = L"";
 
-    public:
-        game(void)
-        {
-            InitializeComponent();
-            //
-            //TODO: Add the constructor code here
-            //
-        }
+public:
+    game(void)
+    {
+        InitializeComponent();
+        //
+        //TODO: Add the constructor code here
+        //
+    }
 
-        game(TrieNode* inKey, int wordCount)
-        {
-            InitializeComponent();
-            key0 = inKey;
-            wordNum1 = wordCount;
-        }
+    game(TrieNode* inKey, int wordCount)
+    {
+        InitializeComponent();
+        key0 = inKey;
+        wordNum1 = wordCount;
+    }
 
 protected:
     /// <summary>
@@ -53,7 +53,6 @@ protected:
 private:
     System::Windows::Forms::Button ^ otp1;
 
-protected:
 private:
     System::Windows::Forms::Button ^ otp2;
 

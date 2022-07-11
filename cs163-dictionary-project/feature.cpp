@@ -29,7 +29,7 @@ HistoryNode* AdjustHistory(HistoryNode* root, string& keyword)
     if (root)
         add->next = root;
     root = add;
-    HistoryNode* pCur = root, *pre = nullptr;
+    HistoryNode *pCur = root, *pre = nullptr;
     int count = 1;
     while (pCur && pCur->next) {
         count++;
@@ -47,7 +47,7 @@ HistoryNode* AdjustHistory(HistoryNode* root, string& keyword)
         pre = pCur;
         pCur = pCur->next;
     }
-    cout << count << "hist\n";
+    //cout << count << "hist\n";
     return root;
 }
 

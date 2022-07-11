@@ -16,7 +16,7 @@ void RemoveAll(TrieNode*& root);
 FullDictTree ChooseDataSet(TrieNode* key, TrieNode* def, string datasetName, int& wordcount);
 
 void randomWord(TrieNode* root, string& key, string& def, int n);
-TrieNode* traverse(TrieNode* root, string& res, int &n, int x);
+TrieNode* traverse(TrieNode* root, string& res, int& n, int x);
 int randomNum(int n);
 
 void inputHistory(ifstream& in, HistoryNode*& his);

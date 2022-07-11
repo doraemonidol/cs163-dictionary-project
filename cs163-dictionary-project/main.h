@@ -43,15 +43,16 @@ public:
     TrieNode* node;
 
 public:
-    Suggestion(TrieNode* in) {
+    Suggestion(TrieNode* in)
+    {
         node = in;
     }
 };
 }
 
 struct HistoryNode {
-	string word = "";
-	HistoryNode* next = nullptr;
+    string word = "";
+    HistoryNode* next = nullptr;
 };
 
 struct Node {

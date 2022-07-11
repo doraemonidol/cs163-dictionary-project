@@ -7,55 +7,61 @@ System::String ^ convertString(string st) {
     return gcnew System::String(st.c_str());
 };
 
-TrieNode* getNode() {
-	TrieNode* pNode = new TrieNode;
-	pNode->isEndOfWord = false;
-	for (int i = 0; i < 128; i++)
-		pNode->children[i] = NULL;
-	return pNode;
+TrieNode* getNode()
+{
+    TrieNode* pNode = new TrieNode;
+    pNode->isEndOfWord = false;
+    for (int i = 0; i < 128; i++)
+        pNode->children[i] = NULL;
+    return pNode;
 }
 
-bool insert(TrieNode*& root, string key, string content) {
+bool insert(TrieNode*& root, string key, string content)
+{
     if (!root)
         root = getNode();
-	TrieNode* pCur = root;
-	for (int i = 0; i < key.length(); i++) {
-		int index = key[i];
-		if (!pCur->children[index])
-			pCur->children[index] = getNode();
-		pCur->childcount++;
-		pCur = pCur->children[index];
-	}
-	if (!pCur->isEndOfWord) {
-           // cout << "ended";
-		pCur->isEndOfWord = true;
-		pCur->content = content;
-		return true;
-	}
-	return false;
+    TrieNode* pCur = root;
+    for (int i = 0; i < key.length(); i++) {
+        int index = key[i];
+        //cout << key[i] << "<";
+        if (!pCur->children[index])
+            pCur->children[index] = getNode();
+        pCur->childcount++;
+        pCur = pCur->children[index];
+    }
+    if (!pCur->isEndOfWord) {
+        // cout << "ended";
+        pCur->isEndOfWord = true;
+        pCur->content = content;
+        return true;
+    }
+    return false;
 }
 
-TrieNode* search(TrieNode* root, string key) {
+TrieNode* search(TrieNode* root, string key)
+{
     if (!root)
         return nullptr;
     //cout << "go";
-	TrieNode* pCur = root;
-	for (int i = 0; i < key.length(); i++) {
-		int index = key[i];
-            cout << i << " ";
-		if (!pCur->children[index])
-			return nullptr;
-		pCur = pCur->children[index];
-	}
-	if (pCur->isEndOfWord) return pCur;
-       //cout << "no";
-	return nullptr;
+    TrieNode* pCur = root;
+    for (int i = 0; i < key.length(); i++) {
+        int index = key[i];
+        //cout << i << " ";
+        if (!pCur->children[index])
+            return nullptr;
+        pCur = pCur->children[index];
+    }
+    if (pCur->isEndOfWord)
+        return pCur;
+    //cout << "no";
+    return nullptr;
 }
 
-TrieNode* searchContinue(TrieNode* root, char c) {
+TrieNode* searchContinue(TrieNode* root, char c)
+{
     if (!root)
         return nullptr;
-    cout << "searchContinue OK!\n";
+    //cout << "searchContinue OK!\n";
     return root->children[c];
 }
 
@@ -63,35 +69,35 @@ bool isEmpty(TrieNode* root)
 {
     if (!root)
         return true;
-	return root->childcount == 0;
+    return root->childcount == 0;
 }
 
-bool remove(TrieNode* root, string& key, int depth) {
-	if (!root)
-		return false;
-	if (depth == key.size()) {
-		if (root->isEndOfWord)
-			root->isEndOfWord = false;
-		if (isEmpty(root)) {
-			delete (root);
-			root = NULL;
-			return true;
-		}
-		return false;
-	}
-	int index = key[depth];
-	bool isRemoved =
-		remove(root->children[index], key, depth + 1);
-	if (isRemoved) {
-		root->childcount--;
-		root->children[index] = NULL;
-	}
-	if (isRemoved && isEmpty(root) && root->isEndOfWord == false) {
-		delete (root);
-		root = NULL;
-		return true;
-	}
-	return false;
+bool remove(TrieNode* root, string& key, int depth)
+{
+    if (!root)
+        return false;
+    if (depth == key.size()) {
+        if (root->isEndOfWord)
+            root->isEndOfWord = false;
+        if (isEmpty(root)) {
+            delete (root);
+            root = NULL;
+            return true;
+        }
+        return false;
+    }
+    int index = key[depth];
+    bool isRemoved = remove(root->children[index], key, depth + 1);
+    if (isRemoved) {
+        root->childcount--;
+        root->children[index] = NULL;
+    }
+    if (isRemoved && isEmpty(root) && root->isEndOfWord == false) {
+        delete (root);
+        root = NULL;
+        return true;
+    }
+    return false;
 }
 
 bool AddKey(TrieNode* keywordTrie, TrieNode* definitionTrie, string& keyword, string& definition)
@@ -120,7 +126,7 @@ bool isLeafNode(TrieNode* root)
     return root->isEndOfWord != false;
 }
 
-void InitializeTrie(TrieNode*& key, TrieNode *& def, string path, int &wordcount)
+void InitializeTrie(TrieNode*& key, TrieNode*& def, string path, int& wordcount)
 {
     //cin.get();
     ifstream f(DATASET_DIR + path);
@@ -129,10 +135,10 @@ void InitializeTrie(TrieNode*& key, TrieNode *& def, string path, int &wordcount
     string str, Word, Content;
     char check;
     if (path == "slang.txt")
-        check = 96; // ` 
-    else check = 9; // TAB 
-    while (!f.eof())
-    {
+        check = 96; // `
+    else
+        check = 9; // TAB
+    while (!f.eof()) {
         str = "";
         Word = "";
         Content = "";
@@ -172,7 +178,7 @@ void RemoveAll(TrieNode*& root)
     root = nullptr;
 }
 
-FullDictTree ChooseDataSet(TrieNode* key, TrieNode* def, string datasetName, int &wordcount)
+FullDictTree ChooseDataSet(TrieNode* key, TrieNode* def, string datasetName, int& wordcount)
 {
     RemoveAll(key);
     RemoveAll(def);
@@ -188,7 +194,8 @@ FullDictTree ChooseDataSet(TrieNode* key, TrieNode* def, string datasetName, int
     return dict;
 }
 
-void inputHistory(ifstream& in, HistoryNode*& his) {
+void inputHistory(ifstream& in, HistoryNode*& his)
+{
     string s;
     while (getline(in, s)) {
         HistoryNode* cur = new HistoryNode;
@@ -197,13 +204,19 @@ void inputHistory(ifstream& in, HistoryNode*& his) {
         his = cur;
     }
 }
-void outputHistory(ofstream& out, HistoryNode*& his) {
-    while (his) {
+void outputHistory(ofstream& out, HistoryNode*& his)
+{
+    if (!his)
+        return;
+    outputHistory(out, his->next);
+    out << his->word << endl;
+    delete his;
+    /*while (his) {
         HistoryNode* cur = his->next;
         out << his->word << endl;
         delete his;
         his = cur;
-    }
+    }*/
 }
 
 void inputData(TrieNode*& key, TrieNode*& def, string& curDatset, TrieNode*& fav, HistoryNode*& his, int& wordCount)
@@ -299,7 +312,7 @@ void inputData(TrieNode*& key, TrieNode*& def, string& curDatset, TrieNode*& fav
 //        wordCount++;
 //    }
 //}
-void RecursiveFileToTrie(ifstream& f, TrieNode* trie, int& wordCount) 
+void RecursiveFileToTrie(ifstream& f, TrieNode* trie, int& wordCount)
 {
     char c;
     while (f.get(c)) {
@@ -309,7 +322,8 @@ void RecursiveFileToTrie(ifstream& f, TrieNode* trie, int& wordCount)
             string ct;
             getline(f, ct);
             trie->content = ct;
-            if (!f.get(c)) break;
+            if (!f.get(c))
+                break;
         }
         if (c == 9) {
             return;
@@ -319,7 +333,7 @@ void RecursiveFileToTrie(ifstream& f, TrieNode* trie, int& wordCount)
         RecursiveFileToTrie(f, trie->children[c], wordCount);
     }
 }
-void FileToTrie(ifstream& f, TrieNode*& trie, int& wordCount) 
+void FileToTrie(ifstream& f, TrieNode*& trie, int& wordCount)
 {
     wordCount = 0;
     trie = getNode();
@@ -359,7 +373,8 @@ void unloadData(TrieNode* key, TrieNode* def, string curDatset, TrieNode* fav, H
     RemoveAll(def);
     RemoveAll(fav);
 }
-void TrieToFile(ofstream& f, TrieNode* trie) {
+void TrieToFile(ofstream& f, TrieNode* trie)
+{
     if (!trie)
         return;
     for (int c = 0; c < 128; c++) {

@@ -9,7 +9,7 @@ void randomWord(TrieNode* root, string& key, string& def, int n)
     def = a->content;
 }
 
-TrieNode* traverse(TrieNode* root, string& res, int &n, int x)
+TrieNode* traverse(TrieNode* root, string& res, int& n, int x)
 {
     //cout << n << " " << x << " " << res << endl;
     if (!root)
