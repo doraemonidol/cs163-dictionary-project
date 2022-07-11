@@ -1282,8 +1282,8 @@ namespace cs163dictionaryproject {
                     this->Controls->Add(this->panEditDef);
                     this->Controls->Add(this->suggestPan);
                     this->Controls->Add(this->panAddNewkey);
-                    this->Controls->Add(this->panShowDef);
                     this->Controls->Add(this->panFavor);
+                    this->Controls->Add(this->panShowDef);
                     this->Font = (gcnew System::Drawing::Font(L"Segoe UI", 16.2F));
                     this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
                     this->Margin = System::Windows::Forms::Padding(6, 7, 6, 7);
@@ -1321,10 +1321,10 @@ namespace cs163dictionaryproject {
         void hideAll() {
             panAddNewkey->Hide();
             panSwDataset->Hide();
-            menuPan->Show();
+            menuPan->Hide();
             panEditDef->Hide();
             panFavor->Hide();
-            panShowDef->Show();
+            //panShowDef->Show();
             suggestPan->Hide();
     }
 
@@ -1391,6 +1391,7 @@ namespace cs163dictionaryproject {
     private:
         System::Void btnSearch_Click(System::Object ^ sender, System::EventArgs ^ e)
         {
+            hideAll();
             TrieNode* result;
             suggestPan->Hide();
             if (searchMode->Text == L"Input Keyword") {
@@ -1441,6 +1442,7 @@ namespace cs163dictionaryproject {
     private:
         System::Void btnSwSearchMode_Click(System::Object ^ sender, System::EventArgs ^ e)
         {
+            hideAll();
             if (searchMode->Text == L"Input Keyword") {
                 searchMode->Text = L"Input Definition";
                 btnSwSearchMode->Text = L"Search by Keyword";
@@ -1457,6 +1459,7 @@ namespace cs163dictionaryproject {
     private:
         System::Void btnSwData_Click(System::Object ^ sender, System::EventArgs ^ e)
         {
+            hideAll();
             if (panSwDataset->Visible)
                 panSwDataset->Hide();
             else {
@@ -1489,6 +1492,7 @@ namespace cs163dictionaryproject {
             if (dialogResult == System::Windows::Forms::DialogResult::No) {
                 return;
             }
+            hideAll();
             int a;
             FullDictTree dictTree = ChooseDataSet(key, def, convertToString(curDataset), a);
             wordNum = a;
@@ -1703,12 +1707,14 @@ namespace cs163dictionaryproject {
     private:
         System::Void searchBox_Click(System::Object ^ sender, System::EventArgs ^ e)
         {
+            hideAll();
             suggestPan->Show();
         }
 
     private:
         System::Void suggestList_SelectedIndexChanged(System::Object ^ sender, System::EventArgs ^ e)
         {
+            hideAll();
             searchBox->Text = suggestList->GetItemText(suggestList->SelectedItem);
             btnSearch->PerformClick();
             suggestPan->Hide();
@@ -1717,12 +1723,14 @@ namespace cs163dictionaryproject {
     private:
         System::Void searchBox_MouseDown(System::Object ^ sender, System::Windows::Forms::MouseEventArgs ^ e)
         {
+            hideAll();
             suggestPan->Show();
         }
 
     private:
         System::Void searchBox_MouseClick(System::Object ^ sender, System::Windows::Forms::MouseEventArgs ^ e)
         {
+            hideAll();
             suggestPan->Show();
         }
 
@@ -1757,6 +1765,7 @@ namespace cs163dictionaryproject {
     private:
         System::Void btnViewFavor_Click(System::Object ^ sender, System::EventArgs ^ e)
         {
+            hideAll();
             if (panFavor->Visible) {
                 panFavor->Hide();
             } else {
@@ -1796,6 +1805,7 @@ namespace cs163dictionaryproject {
     private:
         System::Void btnRandWord_Click(System::Object ^ sender, System::EventArgs ^ e)
         {
+            hideAll();
             string key1, def1;
             int x = randomNum(wordNum);
             cout << "Random: " << x;
