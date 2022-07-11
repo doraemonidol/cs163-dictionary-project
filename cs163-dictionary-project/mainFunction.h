@@ -206,6 +206,9 @@ namespace cs163dictionaryproject {
 
 
             private:
+
+
+            private:
                 System::Windows::Forms::Button ^ btnAddNewkey;
 
             public: 
@@ -282,7 +285,7 @@ namespace cs163dictionaryproject {
                 System::Windows::Forms::Button ^ btnAddFavor;
 
             private:
-                System::Windows::Forms::Label ^ defLabel;
+                System::Windows::Forms::TextBox ^ defLabel;
 
             private:
                 System::Windows::Forms::Label ^ keyLabel;
@@ -347,7 +350,7 @@ namespace cs163dictionaryproject {
                     this->btnRemove = (gcnew System::Windows::Forms::Button());
                     this->btnEdit = (gcnew System::Windows::Forms::Button());
                     this->btnAddFavor = (gcnew System::Windows::Forms::Button());
-                    this->defLabel = (gcnew System::Windows::Forms::Label());
+                    this->defLabel = (gcnew System::Windows::Forms::TextBox());
                     this->keyLabel = (gcnew System::Windows::Forms::Label());
                     this->btnSwData = (gcnew System::Windows::Forms::Button());
                     this->searchMode = (gcnew System::Windows::Forms::Label());
@@ -533,14 +536,22 @@ namespace cs163dictionaryproject {
                     //
                     // defLabel
                     //
+                    this->defLabel->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(5)), static_cast<System::Int32>(static_cast<System::Byte>(5)),
+                        static_cast<System::Int32>(static_cast<System::Byte>(5)));
+                    this->defLabel->BorderStyle = System::Windows::Forms::BorderStyle::None;
                     this->defLabel->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12));
                     this->defLabel->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
                     this->defLabel->Location = System::Drawing::Point(64, 129);
                     this->defLabel->Margin = System::Windows::Forms::Padding(6, 0, 6, 0);
+                    this->defLabel->Multiline = true;
                     this->defLabel->Name = L"defLabel";
+                    this->defLabel->ReadOnly = true;
+                    this->defLabel->RightToLeft = System::Windows::Forms::RightToLeft::No;
+                    this->defLabel->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
                     this->defLabel->Size = System::Drawing::Size(706, 320);
                     this->defLabel->TabIndex = 1;
                     this->defLabel->Text = resources->GetString(L"defLabel.Text");
+                    this->defLabel->TextChanged += gcnew System::EventHandler(this, &mainFunction::defLabel_TextChanged);
                     //
                     // keyLabel
                     //
@@ -1604,6 +1615,12 @@ namespace cs163dictionaryproject {
             for (string c : DATASET_NAME) {
                 dataSetOpt->Items->Add(gcnew String(convertString(c)));
             }
+
+            HistoryNode* cur = his;
+            while (cur) {
+                suggestList->Items->Add(convertString(cur->word));
+                cur = cur->next;
+            }
         }
 
     private:
@@ -1617,9 +1634,9 @@ namespace cs163dictionaryproject {
         System::Void searchBox_TextChanged(System::Object ^ sender, System::EventArgs ^ e)
         {
             cout << "in ";
-            suggestList->Items->Clear();
             string searchText = convertToString(searchBox->Text), s = convertToString(preSearch);
             if (searchText.length() >= REQUIRED_CHAR_NUM) {
+                suggestList->Items->Clear();
                 TrieNode* x;
                 string res = "";
                 int n = 0;
@@ -1673,6 +1690,7 @@ namespace cs163dictionaryproject {
                 cout << sug->Count - 1 << endl;
                 updateSuggestList(sug[sug->Count - 1]->node, res, n, 0, searchText);
             } else {
+                suggestList->Items->Clear();
                 HistoryNode* cur = his;
                 while (cur) {
                     suggestList->Items->Add(convertString(cur->word));
@@ -1796,6 +1814,15 @@ namespace cs163dictionaryproject {
         System::Void mainFunction_FormClosing(System::Object ^ sender, System::Windows::Forms::FormClosingEventArgs ^ e)
         {
             unloadData(key, def, convertToString(curDataset), fav, his);
+        }
+
+    private:
+        System::Void defLabel_TextChanged(System::Object ^ sender, System::EventArgs ^ e)
+        {
+            string st = convertToString(defLabel->Text);
+            if (st.length() > 1440)
+                defLabel->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
+            else defLabel->ScrollBars = System::Windows::Forms::ScrollBars::None;
         }
             };
             }
