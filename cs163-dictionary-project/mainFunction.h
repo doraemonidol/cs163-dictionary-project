@@ -1306,6 +1306,17 @@ namespace cs163dictionaryproject {
         return msclr::interop::marshal_as<std::string>(st);
     }
 
+    private:
+        void hideAll() {
+            panAddNewkey->Hide();
+            panSwDataset->Hide();
+            menuPan->Show();
+            panEditDef->Hide();
+            panFavor->Hide();
+            panShowDef->Show();
+            suggestPan->Hide();
+    }
+
 	private: System::Void btnAddFavor_Click(System::Object^ sender, System::EventArgs^ e) {
             if (btnAddedFavor->Visible) {
                 fav = RemoveFavourite(fav, convertToString(searchBox->Text));
@@ -1769,6 +1780,7 @@ namespace cs163dictionaryproject {
         {
             string key1, def1;
             int x = randomNum(wordNum);
+            cout << "Random: " << x;
             randomWord(key, key1, def1, x);
             if (searchMode->Text == L"Input Keyword") 
                 searchBox->Text = convertString(key1);
@@ -1777,6 +1789,7 @@ namespace cs163dictionaryproject {
             keyLabel->Text = convertString(key1);
             defLabel->Text = convertString(def1);
             panShowDef->Show();
+            suggestPan->Hide();
         }
 
     private:

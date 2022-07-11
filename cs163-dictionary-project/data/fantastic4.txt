@@ -1,1 +1,1 @@
-EngToViet.txt
+VietToEng.txt

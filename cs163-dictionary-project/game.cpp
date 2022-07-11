@@ -4,7 +4,7 @@
 void randomWord(TrieNode* root, string& key, string& def, int n)
 {
     //cout << endl;
-    key = "";
+    key = def = "";
     TrieNode* a = traverse(root, key, n, 0);
     def = a->content;
 }

@@ -123,7 +123,7 @@ bool isLeafNode(TrieNode* root)
 void InitializeTrie(TrieNode*& key, TrieNode *& def, string path, int &wordcount)
 {
     //cin.get();
-    ifstream f("./dataset/" + path);
+    ifstream f(DATASET_DIR + path);
     wordcount = 0;
     bool checkEndofWord;
     string str, Word, Content;
@@ -152,9 +152,9 @@ void InitializeTrie(TrieNode*& key, TrieNode *& def, string path, int &wordcount
         }
 
         //cout << Word << " " << Content << endl;
-        insert(key, Word, Content);
+        if (insert(key, Word, Content))
+            wordcount++;
         insert(def, Content, Word);
-        wordcount++;
     }
     f.close();
 }
@@ -321,6 +321,7 @@ void RecursiveFileToTrie(ifstream& f, TrieNode* trie, int& wordCount)
 }
 void FileToTrie(ifstream& f, TrieNode*& trie, int& wordCount) 
 {
+    wordCount = 0;
     trie = getNode();
     RecursiveFileToTrie(f, trie, wordCount);
 }
@@ -358,7 +359,6 @@ void unloadData(TrieNode* key, TrieNode* def, string curDatset, TrieNode* fav, H
     RemoveAll(def);
     RemoveAll(fav);
 }
-
 void TrieToFile(ofstream& f, TrieNode* trie) {
     if (!trie)
         return;

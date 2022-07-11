@@ -15,6 +15,7 @@ void main() {
     ShowWindow(GetConsoleWindow(), SW_SHOW);
     //InitializeTrie(key, def, "slang.txt", wordCount);
     inputData(key, def, curDataset, fav, his, wordCount);
+    cout << ">>" << wordCount << endl;
     Application::EnableVisualStyles();
     Application::SetCompatibleTextRenderingDefault(false);
     cs163dictionaryproject::mainFunction form(def, key, fav, his, wordCount, convertString(curDataset));

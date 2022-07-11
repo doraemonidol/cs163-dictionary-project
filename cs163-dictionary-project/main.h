@@ -27,6 +27,7 @@ const int SUGGEST_LIST = 20;
 const int REQUIRED_CHAR_NUM = 2;
 const int MAX_HISTORY = 20;
 const string DATA_DIR = "./data/";
+const string DATASET_DIR = "./dataset/";
 
 struct TrieNode {
     TrieNode* children[128]; //26
