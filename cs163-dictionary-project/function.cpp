@@ -24,9 +24,10 @@ bool insert(TrieNode*& root, string key, string content)
     for (int i = 0; i < key.length(); i++) {
         int index = key[i];
         //cout << key[i] << "<";
-        if (!pCur->children[index])
+        if (!pCur->children[index]) {
             pCur->children[index] = getNode();
-        pCur->childcount++;
+            pCur->childcount++;
+        }
         pCur = pCur->children[index];
     }
     if (!pCur->isEndOfWord) {
