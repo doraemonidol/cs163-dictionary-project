@@ -63,3 +63,21 @@ FullDictTree ChooseDataSet(TrieNode* key, TrieNode* def, string datasetName, int
 //        wordCount++;
 //    }
 //}
+
+void TrieToFile(ofstream& f, TrieNode* trie)
+{
+    if (!trie)
+        return;
+    for (int c = 0; c < 128; c++) {
+        if (trie->children[c]) {
+            f << (char)c;
+            TrieToFile(f, trie->children[c]);
+            char tab = 9;
+            f << tab;
+        }
+    }
+    if (trie->isEndOfWord) {
+        f << '\n';
+        f << trie->content << '\n';
+    }
+}
