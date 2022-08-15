@@ -168,3 +168,14 @@ System::Void game_Load(System::Object ^ sender, System::EventArgs ^ e)
     if (quesLabel->Text == L"No data")
         nextQuestion->PerformClick();
 }
+
+System::Void btnGameOn_Click(System::Object ^ sender, System::EventArgs ^ e)
+{
+    game ^ gam = gcnew game(key, wordNum);
+    gam->ShowDialog();
+}
+
+System::Void butAddCancel_Click(System::Object ^ sender, System::EventArgs ^ e)
+{
+    panAddNewkey->Hide();
+}
