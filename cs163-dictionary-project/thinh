@@ -31,3 +31,35 @@ FullDictTree ChooseDataSet(TrieNode* key, TrieNode* def, string datasetName, int
     f.close();
     return dict;
 }
+
+//void FileToTrie(ifstream& f, TrieNode*& trie, int &wordCount) {
+//    if (f.eof()) return;
+//    string s;
+//    wordCount = 0;
+//    trie = getNode();
+//    TrieNode* pCur;
+//    stack<TrieNode*> st;
+//    st = stack<TrieNode*>();
+//    st.push(trie);
+//    while (getline(f, s)) {
+//        pCur = trie;
+//        //cout << s << " " << wordCount << endl;
+//        for (char c : s) {
+//            if (c == 9) { //tab character
+//                //cout << st.size() << "<<\n";
+//                pCur = st.top();
+//                st.pop();
+//            } else {
+//                //cout << st.size() << "<<\n";
+//                pCur->children[c] = getNode();
+//                pCur->childcount++;
+//                st.push(pCur);
+//                pCur = pCur->children[c];
+//            }
+//        }
+//        getline(f, s);
+//        pCur->content = s;
+//        pCur->isEndOfWord = true;
+//        wordCount++;
+//    }
+//}
