@@ -3,7 +3,6 @@
 
 void randomWord(TrieNode* root, string& key, string& def, int n)
 {
-    //cout << endl;
     key = def = "";
     TrieNode* a = traverse(root, key, n, 0);
     def = a->content;
@@ -11,11 +10,9 @@ void randomWord(TrieNode* root, string& key, string& def, int n)
 
 TrieNode* traverse(TrieNode* root, string& res, int& n, int x)
 {
-    //cout << n << " " << x << " " << res << endl;
     if (!root)
         return nullptr;
     if (n == 1 && root->isEndOfWord) {
-        //cout << "done";
         res = res.substr(0, x);
         return root;
     }
