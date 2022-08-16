@@ -450,25 +450,5 @@ private:
         otp4->Text = convertString(res[4]);
         quesLabel->Text = convertString(res[0]);
     }
-
-private:
-    System::Void switchGameMode_Click(System::Object ^ sender, System::EventArgs ^ e)
-    {
-        nameGameMode->Text = convertString(nameGameMode->Text == L"Guess the Definition" ? "Guess the Keyword" : "Guess the Definition");
-        nextQuestion->PerformClick();
-    }
-
-private:
-    System::Void backToMenu_Click(System::Object ^ sender, System::EventArgs ^ e)
-    {
-        Close();
-    }
-
-private:
-    System::Void game_Load(System::Object ^ sender, System::EventArgs ^ e)
-    {
-        if (quesLabel->Text == L"No data")
-            nextQuestion->PerformClick();
-    }
 };
 }
