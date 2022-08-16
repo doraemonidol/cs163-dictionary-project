@@ -158,10 +158,6 @@ System::Void switchGameMode_Click(System::Object ^ sender, System::EventArgs ^ e
     nextQuestion->PerformClick();
 }
 
-System::Void backToMenu_Click(System::Object ^ sender, System::EventArgs ^ e)
-{
-    Close();
-}
 
 System::Void game_Load(System::Object ^ sender, System::EventArgs ^ e)
 {
@@ -173,9 +169,4 @@ System::Void btnGameOn_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
     game ^ gam = gcnew game(key, wordNum);
     gam->ShowDialog();
-}
-
-System::Void butAddCancel_Click(System::Object ^ sender, System::EventArgs ^ e)
-{
-    panAddNewkey->Hide();
 }
